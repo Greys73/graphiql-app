@@ -35,8 +35,6 @@ In the project directory, you can run scripts:
 * `npm run prepare` - installs and configures Husky in project
 * `npm run test` - runs the Vites tests
 	
-on the files staged for commit
-	
 ## Team
 This Application is created by `Previous` team:
 * [@Greys73](https://github.com/Greys73)
