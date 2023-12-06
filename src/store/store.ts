@@ -1,8 +1,4 @@
-import {
-  PreloadedState,
-  combineReducers,
-  configureStore,
-} from '@reduxjs/toolkit';
+import { PreloadedState, combineReducers, configureStore } from '@reduxjs/toolkit';
 // import someSlice from './reducers/someSlice';
 
 export const rootReducer = combineReducers({

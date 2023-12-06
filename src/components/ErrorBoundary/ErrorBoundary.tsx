@@ -1,8 +1,7 @@
-/* eslint-disable no-console */
 import Link from 'next/link';
 import { Component, ErrorInfo, ReactNode } from 'react';
 
-type Props = { children: JSX.Element[] | JSX.Element };
+type Props = { children: ReactNode[] | ReactNode };
 type State = { error: boolean };
 
 class ErrorBoundary extends Component<Props, State> {
@@ -20,11 +19,9 @@ class ErrorBoundary extends Component<Props, State> {
     if (this.state.error) {
       return (
         <>
-          <div className="errorBoundary__header">
-            Oops! Something went wrong...
-          </div>
-          <Link href="/">
-            <button type="button">RESET</button>
+          <h1>Oops! Something went wrong...</h1>
+          <Link href='/'>
+            <button type='button'>RESET</button>
           </Link>
         </>
       );
