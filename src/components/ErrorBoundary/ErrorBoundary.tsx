@@ -20,8 +20,8 @@ class ErrorBoundary extends Component<Props, State> {
       return (
         <>
           <h1>Oops! Something went wrong...</h1>
-          <Link href="/">
-            <button type="button">RESET</button>
+          <Link href='/'>
+            <button type='button'>RESET</button>
           </Link>
         </>
       );
