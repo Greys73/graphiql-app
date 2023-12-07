@@ -1,9 +1,10 @@
 import { ReactNode } from 'react';
 import type { Metadata } from 'next';
 import { Providers } from '@src/app/providers';
-import Header from '@components/Header/Header';
-import Footer from '@components/Footer/Footer';
+import Header from '@src/components/Header';
+import Footer from '@src/components/Footer';
 import { fonts } from '../styles/fonts';
+import '../styles/styles.css';
 
 export const metadata: Metadata = {
   title: 'GraphiQL',

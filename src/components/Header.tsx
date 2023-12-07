@@ -11,7 +11,7 @@ const Header = () => {
     { name: NamePages.SignUp, path: PathPages.SignUp },
   ];
   return (
-    <Flex as='header' align='center' w='100%'>
+    <Flex as='header' align='center' w='100%' h={'100px'}>
       <Container maxW='1080px'>
         <Heading as='h1' size='2xl' noOfLines={1}>
           Header
