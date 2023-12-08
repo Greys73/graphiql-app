@@ -1,12 +1,8 @@
 'use client';
-import { Link } from '@chakra-ui/next-js';
 import { Card, CardHeader, CardBody, CardFooter, Heading, Text, Button, Flex } from '@chakra-ui/react';
 export default function Home() {
   return (
     <Flex alignItems='center' flexDirection='column' mt='20' gap='10'>
-      <Link href='/' color='blue.400' _hover={{ color: 'blue.500' }}>
-        Home
-      </Link>
       <Card align='center' w='50%'>
         <CardHeader>
           <Heading size='md'> Example Title</Heading>
