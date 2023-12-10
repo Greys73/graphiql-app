@@ -22,7 +22,7 @@ const code = `query ($filmId: ID!, $planetId: ID!) {
 const CodeArea = () => {
   const [value, setValue] = useState(code);
   const onChange = React.useCallback((val: string) => {
-    graphqlFormat(val).then(e=>console.log(e));
+    graphqlFormat(val).then((e) => console.log(e));
     setValue(val);
   }, []);
   return <CodeMirror value={value} onChange={onChange} />;

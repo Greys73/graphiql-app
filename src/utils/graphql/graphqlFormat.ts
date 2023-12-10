@@ -6,13 +6,12 @@ const graphqlFormat = async (code: string) => {
   try {
     result = formatter.default.format(code, {
       parser: 'graphql',
-      plugins: [graphqlPlugin.default]
+      plugins: [graphqlPlugin.default],
     });
   } catch (error) {
     console.log((error as Error).message);
   }
   return result;
-}
+};
 
 export default graphqlFormat;
-
