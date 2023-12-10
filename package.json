@@ -31,6 +31,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.0.1",
     "axios": "^1.6.2",
+    "cm6-graphql": "^0.0.5",
     "eslint": "^8",
     "eslint-config-next": "^14.0.3",
     "eslint-config-prettier": "^9.1.0",

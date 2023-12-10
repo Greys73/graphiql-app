@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import CodeMirror from '@uiw/react-codemirror';
 import graphqlFormat from '@src/utils/graphql/graphqlFormat';
+import { graphql } from 'cm6-graphql';
 
-const code = `query ($filmId: ID!, $planetId: ID!) {
+const codeExample = `query ($filmId: ID!, $planetId: ID!) {
   film(filmID: $filmId) {
     created
     director
@@ -19,12 +20,21 @@ const code = `query ($filmId: ID!, $planetId: ID!) {
   }
 }`;
 
-const CodeArea = () => {
-  const [value, setValue] = useState(code);
+const CodeArea: FC = () => {
+  const [value, setValue] = useState(codeExample);
+
   const onChange = React.useCallback((val: string) => {
-    graphqlFormat(val).then((e) => console.log(e));
     setValue(val);
   }, []);
-  return <CodeMirror value={value} onChange={onChange} />;
+
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.altKey && e.ctrlKey && e.key === 'f') {
+      graphqlFormat(value).then((e) => {
+        setValue(e)
+      });
+    }
+  };
+
+  return <CodeMirror value={value} onKeyDown={onKeyDown} onChange={onChange} extensions={[graphql()]} />;
 };
 export default CodeArea;
