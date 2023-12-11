@@ -1,6 +1,20 @@
 'use client';
 import { Card, CardHeader, CardBody, CardFooter, Heading, Text, Button, Flex } from '@chakra-ui/react';
+import { readUserSession } from '@src/lib/actions';
+import { PathPages } from '../lib/constants';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+
 export default function Home() {
+  const router = useRouter();
+
+  const checkAuth = async () => {
+    const { data } = await readUserSession();
+    if (!data.session) return router.push(PathPages.SignUp);
+  };
+  useEffect(() => {
+    checkAuth(), [checkAuth];
+  });
   return (
     <Flex alignItems='center' flexDirection='column' mt='20' gap='10'>
       <Card align='center' w='50%'>
