@@ -31,7 +31,7 @@ const codeExample2 = `query {
 }`;
 
 const CodeArea: FC = () => {
-  const [value, setValue] = useState(codeExample2);
+  const [value, setValue] = useState(codeExample1);
   const [schema, setSchema] = useState<GraphQLSchema>();
   const areaRef = useRef<ReactCodeMirrorRef | null>(null);
 
