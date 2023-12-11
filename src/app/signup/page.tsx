@@ -1,13 +1,10 @@
-'use client';
-import { Container, Heading } from '@chakra-ui/react';
-import { NamePages } from '@src/lib/constants';
+import { readUserSession } from '@src/lib/actions';
+import SignUpPage from './components/SignUpPage';
+import { redirect } from 'next/navigation';
+import { PathPages } from '@src/lib/constants';
 
-export default function SignUp() {
-  return (
-    <Container maxW='1080px' centerContent>
-      <Heading as='h1' size='4xl' p={2} noOfLines={1}>
-        {NamePages.SignUp}
-      </Heading>
-    </Container>
-  );
+export default async function SignUp() {
+  const { data } = await readUserSession();
+  if (data.session) return redirect(PathPages.Home);
+  return <SignUpPage />;
 }
