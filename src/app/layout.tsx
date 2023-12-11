@@ -13,8 +13,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang='en'>
-      <body className={fonts.rubik.variable}>
+    <html lang='en' className={fonts.roboto.variable}>
+      <body>
         <Providers>
           <Header />
           <main>{children}</main>
