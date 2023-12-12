@@ -42,7 +42,7 @@ export default function LoginForm() {
         invalidMessage={errors.password?.message}
         register={register('password')}
       />
-      <Button mt={4} colorScheme='teal' isLoading={isSubmitting} type='submit'>
+      <Button mt={4} colorScheme='base' isLoading={isSubmitting} type='submit'>
         Login
       </Button>
     </Flex>
