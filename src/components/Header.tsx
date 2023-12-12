@@ -1,5 +1,5 @@
 'use client';
-import { Heading, Flex, Container, Button, Text } from '@chakra-ui/react';
+import { Heading, Flex, Container, Button, Text, Highlight } from '@chakra-ui/react';
 import { Image, Link } from '@chakra-ui/next-js';
 import Logo from '@src/assets/image/logo.svg';
 import AuthNavPanel from './AuthNavPanel';
@@ -23,10 +23,9 @@ const Header = () => {
         >
           <Image src={Logo} boxSize='40px' alt='GraphQL' />
           <Heading as='h1' size='md' noOfLines={1}>
-            <Text as={'span'} color='base.500'>
-              GraphQL
-            </Text>
-            Application
+            <Highlight query='GraphQL' styles={{ color: 'base.500' }}>
+              GraphQL Application
+            </Highlight>
           </Heading>
         </Link>
         <Flex gap='6' alignItems={'center'}>
