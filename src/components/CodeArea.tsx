@@ -46,9 +46,7 @@ const CodeArea: FC = () => {
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.ctrlKey && e.code === 'KeyS') {
       e.preventDefault();
-      graphqlFormat(value).then((e) => {
-        setValue(e);
-      });
+      setValue(graphqlFormat(value));
       templateSchema().then((e) => setSchema(e));
     }
   };

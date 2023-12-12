@@ -3,6 +3,8 @@ type TEntity = {
   field: string | null;
 };
 
+const innerTrim = (text: string) => text.replaceAll(/[\r\n]+/g, '').replaceAll(/ +/g, ' ');
+
 const getField = (text: string) => {
   const stack = [];
   for (let i = 0; i < text.length; i++) {
@@ -64,16 +66,16 @@ const formatSection = (field: string, indent: string) => {
   let result = '';
   const entities = parseSection(field);
   entities.forEach((entity) => {
-    result += `${indent}${entity.name}`;
+    result += `${indent}${innerTrim(entity.name)}`;
     result += entity.field ? ` {\n${formatSection(entity.field, indent + '  ')}${indent}}\n` : '\n';
   });
   return result;
 };
 
-const graphqlFormat = async (code: string) => {
+const graphqlFormat = (code: string) => {
   const braceStart = code.indexOf('{');
   const braceEnd = code.lastIndexOf('}');
-  const query = code.slice(0, braceStart).trim();
+  const query = innerTrim(code.slice(0, braceStart).trim());
   const field = formatSection(code.slice(braceStart, braceEnd), '  ');
   return `${query} {\n${field}}\n`;
 };
