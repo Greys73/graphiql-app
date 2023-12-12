@@ -7,7 +7,7 @@ import { login } from '@src/lib/actions';
 import { showErrorToast, showSuccessToast } from '@src/utils/toasts';
 import { useForm } from 'react-hook-form';
 
-export default function SignUpForm() {
+export default function LoginForm() {
   const schema = getLoginSchema();
   const toast = useToast();
 
