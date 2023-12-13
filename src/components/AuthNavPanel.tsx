@@ -1,27 +1,16 @@
 'use client';
-import { Button, Flex, useToast } from '@chakra-ui/react';
-import { Link } from '@chakra-ui/next-js';
+import { Button, Flex, useToast, Link } from '@chakra-ui/react';
+import NextLink from 'next/link';
 import { NamePages, PathPages } from '@src/lib/constants';
-import { logOut, readUserSession } from '@src/lib/actions';
+import { AuthNavPanelProps } from '@src/lib/types/types';
+import { logOut } from '@src/lib/actions';
 import { showErrorToast, showSuccessToast } from '@src/utils/toasts';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
 
-const AuthNavPanel = () => {
-  const routerHeader = useRouter();
+const AuthNavPanel = ({ isAuth, errorAuth }: AuthNavPanelProps) => {
+  const router = useRouter();
   const toast = useToast();
-  const [isAuthorized, checkAuthorized] = useState<boolean>();
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const checkAuthorization = async () => {
-    const { data, error } = await readUserSession();
-    checkAuthorized(() => Boolean(data.session));
-    if (error) showErrorToast(toast, error.message);
-  };
-
-  useEffect(() => {
-    checkAuthorization();
-  }, [checkAuthorization]);
+  if (errorAuth) showErrorToast(toast, errorAuth.message);
 
   const logOutHandler = async () => {
     const result = await logOut();
@@ -29,21 +18,21 @@ const AuthNavPanel = () => {
     error?.message
       ? showErrorToast(toast, error.message)
       : showSuccessToast(toast, 'You have successfully logged out of your profile');
-    routerHeader.push(PathPages.SignUp);
+    router.refresh();
   };
 
   return (
     <Flex gap={'2'} alignItems={'center'}>
-      {isAuthorized ? (
+      {isAuth ? (
         <Button colorScheme='base' onClick={logOutHandler}>
           LogOut
         </Button>
       ) : (
         <>
-          <Link href={PathPages.Login}>
+          <Link as={NextLink} href={PathPages.Login}>
             <Button variant={'outline'}>{NamePages.Login}</Button>
           </Link>
-          <Link href={PathPages.SignUp}>
+          <Link as={NextLink} href={PathPages.SignUp}>
             <Button colorScheme='base'>{NamePages.SignUp}</Button>
           </Link>
         </>

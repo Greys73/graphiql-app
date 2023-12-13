@@ -5,18 +5,20 @@ import Header from '@src/components/Header';
 import Footer from '@src/components/Footer';
 import { fonts } from '../styles/fonts';
 import '../styles/styles.css';
+import { readUserSession } from '@src/lib/actions';
 
 export const metadata: Metadata = {
   title: 'GraphiQL',
   description: 'GraphiQL is a playground/IDE for graphQL',
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  const { data, error } = await readUserSession();
   return (
     <html lang='en' className={fonts.roboto.variable}>
       <body>
         <Providers>
-          <Header />
+          <Header isAuth={data.session} errorAuth={error} />
           <main>{children}</main>
           <Footer />
         </Providers>

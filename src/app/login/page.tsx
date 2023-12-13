@@ -3,7 +3,7 @@ import LoginPage from './components/LoginPage';
 import { redirect } from 'next/navigation';
 import { PathPages } from '@src/lib/constants';
 
-export default async function Login() {
+export default async function page() {
   const { data } = await readUserSession();
   if (data.session) return redirect(PathPages.Home);
   return <LoginPage />;
