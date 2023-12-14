@@ -1,9 +1,7 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
-import CodeMirror, { ReactCodeMirrorRef } from '@uiw/react-codemirror';
-import graphqlFormat from '@src/utils/graphql/graphqlFormat';
-import { graphql, updateSchema } from 'cm6-graphql';
-import templateSchema from '@src/lib/templateSchema';
-import { GraphQLSchema } from 'graphql';
+import React, { useState } from 'react';
+import CodeMirror from '@uiw/react-codemirror';
+
+import { TArea } from '@src/lib/types/types';
 
 const codeExample1 = `query ($filmId: ID!, $planetId: ID!) {
   film(filmID: $filmId) {
@@ -30,14 +28,9 @@ const codeExample2 = `query {
     }
 }`;
 
-const CodeArea: FC = () => {
+const CodeArea = ({ options }: { options: TArea }) => {
+  // TODO: заменить на работу со store
   const [value, setValue] = useState(codeExample1);
-  const [schema, setSchema] = useState<GraphQLSchema>();
-  const areaRef = useRef<ReactCodeMirrorRef | null>(null);
-
-  useEffect(() => {
-    if (schema) updateSchema(areaRef.current!.view, schema);
-  }, [schema]);
 
   const onChange = React.useCallback((val: string) => {
     setValue(val);
@@ -46,8 +39,7 @@ const CodeArea: FC = () => {
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.ctrlKey && e.code === 'KeyS') {
       e.preventDefault();
-      setValue(graphqlFormat(value));
-      templateSchema().then((e) => setSchema(e));
+      if (options.format) setValue(options.format(value));
     }
   };
 
@@ -56,8 +48,9 @@ const CodeArea: FC = () => {
       value={value}
       onKeyDown={onKeyDown}
       onChange={onChange}
-      extensions={[graphql(schema)]}
-      ref={areaRef}
+      extensions={options.extensions}
+      ref={options.ref}
+      readOnly={options.readOnly}
       basicSetup={{
         highlightActiveLine: false,
         highlightActiveLineGutter: false,
