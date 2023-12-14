@@ -17,9 +17,9 @@ const signUpSchema = {
     .string()
     .required('Password is required')
     .min(8, 'Password must contain at least 8 characters')
-    .matches(/\d/, 'Password must contain at least one number')
-    .matches(/[\W_]+/, 'Password must contain a special character')
-    .matches(/^(?=.*[а-яА-Яa-zA-Z]).*$/, 'Password must contain at least one letter'),
+    .matches(/\p{General_Category=Number}/u, 'Password must contain at least one number')
+    .matches(/[\p{General_Category=Punctuation}\p{Symbol}]/u, 'Password must contain a special symbol')
+    .matches(/\p{General_Category=Letter}/u, 'Password must contain at least one letter'),
   passwordConfirm: yup
     .string()
     .required('Password Confirm is required')
