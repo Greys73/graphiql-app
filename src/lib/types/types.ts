@@ -9,6 +9,18 @@ export interface AuthInputType {
   type: 'password' | 'email' | 'text';
 }
 
+export interface SubmitAuth {
+  email: string;
+  password: string;
+  passwordConfirm?: string;
+}
+
+export interface AuthInputPasswordType {
+  name: string;
+  register: UseFormRegisterReturn;
+  invalidMessage?: string;
+}
+
 export interface AuthCardType {
   icon: IconType;
   heading: string;

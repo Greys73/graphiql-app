@@ -1,6 +1,4 @@
 import * as yup from 'yup';
-import YupPassword from 'yup-password';
-YupPassword(yup);
 
 const STRONG_EMAIL_REGEXP =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -8,26 +6,31 @@ const STRONG_EMAIL_REGEXP =
 const baseSchema = {
   email: yup
     .string()
+    .required('Email address is required')
     .email('Invalid email address')
-    .matches(STRONG_EMAIL_REGEXP, 'Invalid email address')
-    .required('Email address is required'),
-  password: yup
-    .string()
-    .min(8, 'Password must contain at least 8 characters')
-    .minNumbers(1, 'Password must contain at least one number')
-    .minSymbols(1, 'Password must contain at least one symbol')
-    .matches(/^(?=.*[а-яА-Яa-zA-Z]).*$/, 'Password must contain at least one letter')
-    .required('Password is required'),
+    .matches(STRONG_EMAIL_REGEXP, 'Invalid email address'),
 };
 
 const signUpSchema = {
   ...baseSchema,
+  password: yup
+    .string()
+    .required('Password is required')
+    .min(8, 'Password must contain at least 8 characters')
+    .matches(/\d/, 'Password must contain at least one number')
+    .matches(/[\W_]+/, 'Password must contain a special character')
+    .matches(/^(?=.*[а-яА-Яa-zA-Z]).*$/, 'Password must contain at least one letter'),
   passwordConfirm: yup
     .string()
-    .oneOf([yup.ref('password')], 'Passwords must match')
-    .required('Password Confirm is required'),
+    .required('Password Confirm is required')
+    .oneOf([yup.ref('password')], 'Passwords must match'),
 };
 
-export const getLoginSchema = () => yup.object().shape(baseSchema);
+const loginSchema = {
+  ...baseSchema,
+  password: yup.string().required('Password is required'),
+};
+
+export const getLoginSchema = () => yup.object().shape(loginSchema);
 
 export const getSignUpSchema = () => yup.object().shape(signUpSchema);

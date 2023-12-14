@@ -1,11 +1,13 @@
 'use client';
 import { Flex, Button, useToast } from '@chakra-ui/react';
 import AuthInput from '@src/components/AuthInput';
+import AuthInputPassword from '@src/components/AuthInputPassword';
 import { getSignUpSchema } from '@src/lib/schema';
 import { signUp } from '@src/lib/actions';
 import { showErrorToast, showSuccessToast } from '@src/utils/toasts';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
+import { SubmitAuth } from '@src/lib/types/types';
 
 export default function SignUpForm() {
   const schema = getSignUpSchema();
@@ -20,7 +22,7 @@ export default function SignUpForm() {
     resolver: yupResolver(schema),
   });
 
-  async function onSubmit(values: { email: string; password: string }) {
+  async function onSubmit(values: SubmitAuth) {
     const result = await signUp(values);
     const { error } = JSON.parse(result);
     error?.message
@@ -36,15 +38,13 @@ export default function SignUpForm() {
         invalidMessage={errors.email?.message}
         register={register('email')}
       />
-      <AuthInput
+      <AuthInputPassword
         name='Password'
-        type='password'
         invalidMessage={errors.password?.message}
         register={register('password')}
       />
-      <AuthInput
+      <AuthInputPassword
         name='Password Confirm'
-        type='password'
         invalidMessage={errors.passwordConfirm?.message}
         register={register('passwordConfirm')}
       />

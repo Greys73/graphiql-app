@@ -6,6 +6,8 @@ import { getLoginSchema } from '@src/lib/schema';
 import { login } from '@src/lib/actions';
 import { showErrorToast, showSuccessToast } from '@src/utils/toasts';
 import { useForm } from 'react-hook-form';
+import AuthInputPassword from '@src/components/AuthInputPassword';
+import { SubmitAuth } from '@src/lib/types/types';
 
 export default function LoginForm() {
   const schema = getLoginSchema();
@@ -20,7 +22,7 @@ export default function LoginForm() {
     resolver: yupResolver(schema),
   });
 
-  async function onSubmit(values: { email: string; password: string }) {
+  async function onSubmit(values: SubmitAuth) {
     const result = await login(values);
     const { error } = JSON.parse(result);
     error?.message
@@ -36,9 +38,8 @@ export default function LoginForm() {
         invalidMessage={errors.email?.message}
         register={register('email')}
       />
-      <AuthInput
+      <AuthInputPassword
         name='Password'
-        type='password'
         invalidMessage={errors.password?.message}
         register={register('password')}
       />
