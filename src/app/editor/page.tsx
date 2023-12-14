@@ -43,7 +43,7 @@ export default function Editor() {
         <Card w='48%' boxShadow='xl' m={2}>
           <CardHeader>Editor</CardHeader>
           <CardBody>
-              <CodeArea options={areas.editor} />
+            <CodeArea options={areas.editor} />
           </CardBody>
         </Card>
         <Spacer />
