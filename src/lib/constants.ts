@@ -1,5 +1,5 @@
 export enum NamePages {
-  Home = 'Welcome',
+  Home = 'Home',
   Editor = 'Editor',
   SignUp = 'Sign Up',
   Login = 'Login',
