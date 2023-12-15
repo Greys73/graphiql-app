@@ -10,7 +10,9 @@ export function Providers({ children }: { children: ReactNode }) {
   return (
     <ErrorBoundary>
       <CacheProvider>
-        <ChakraProvider theme={theme}>{children}</ChakraProvider>
+        <ChakraProvider resetCSS theme={theme}>
+          {children}
+        </ChakraProvider>
       </CacheProvider>
     </ErrorBoundary>
   );
