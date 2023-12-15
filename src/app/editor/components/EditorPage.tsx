@@ -4,7 +4,17 @@ import { useEffect, useRef, useState } from 'react';
 import { GraphQLSchema } from 'graphql';
 import { graphql, updateSchema } from 'cm6-graphql';
 import { ReactCodeMirrorRef } from '@uiw/react-codemirror';
-import { Box, Card, CardBody, CardHeader, Container, Flex, Heading, Spacer, useToast } from '@chakra-ui/react';
+import {
+  Box,
+  Card,
+  CardBody,
+  CardHeader,
+  Container,
+  Flex,
+  Heading,
+  Spacer,
+  useToast,
+} from '@chakra-ui/react';
 import CodeArea from '@src/components/CodeArea';
 import { TArea } from '@src/lib/types/types';
 import { NamePages } from '@src/lib/constants';
