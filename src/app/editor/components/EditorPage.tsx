@@ -4,25 +4,26 @@ import { useEffect, useRef, useState } from 'react';
 import { GraphQLSchema } from 'graphql';
 import { graphql, updateSchema } from 'cm6-graphql';
 import { ReactCodeMirrorRef } from '@uiw/react-codemirror';
-import {
-  Box,
-  Card,
-  CardBody,
-  CardHeader,
-  Container,
-  Flex,
-  Heading,
-  Spacer,
-  useToast,
-} from '@chakra-ui/react';
-import CodeArea from '@src/components/CodeArea';
+import { json } from '@codemirror/lang-json';
+import { Box, Container, Flex, Heading, Spacer, useToast } from '@chakra-ui/react';
 import { TArea } from '@src/lib/types/types';
-import { NamePages } from '@src/lib/constants';
+import { NamePages } from '@src/lib/constants/pages';
 import templateSchema from '@src/lib/templateSchema';
 import graphqlFormat from '@src/utils/graphql/graphqlFormat';
 import jsonFormat from '@src/utils/json/jsonFormat';
 import { EditorPageProps } from '@src/lib/types/types';
 import { showErrorToast } from '@src/utils/toasts';
+import InputEndpoint from './InputEndpoint';
+import {
+  DefaultAPI,
+  DefaultGraphQL,
+  DefaultHeaders,
+  DefaultVariables,
+  DefaultViewer,
+} from '@src/lib/constants/editor';
+import ButtonDoc from './ButtonDoc';
+import SectionCode from './SectionCode';
+import React from 'react';
 
 export default function Editor({ errorAuth }: EditorPageProps) {
   const toast = useToast();
@@ -35,39 +36,62 @@ export default function Editor({ errorAuth }: EditorPageProps) {
         Object.values(areas).forEach((area) => {
           const view = area.ref.current.view;
           if (view) updateSchema(view, newSchema);
+          area.ref.current.state?.toJSON();
         });
         setSchema(newSchema);
       }
     });
   }, []);
 
+  const [editor, setEditor] = useState(DefaultGraphQL);
+  const [viewer, setViewer] = useState(DefaultViewer);
+  const [variables, setVariables] = useState(DefaultVariables);
+  const [headers, setHeaders] = useState(DefaultHeaders);
+
   const areas: { [key: string]: TArea } = {
-    editor: { format: graphqlFormat, ref: useRef<ReactCodeMirrorRef>({}), extensions: [graphql(schema)] },
-    variables: { format: jsonFormat, ref: useRef<ReactCodeMirrorRef>({}) },
-    headers: { format: jsonFormat, ref: useRef<ReactCodeMirrorRef>({}) },
-    viewer: { readOnly: true, ref: useRef<ReactCodeMirrorRef>({}) },
+    editor: {
+      value: editor,
+      setValue: setEditor,
+      format: graphqlFormat,
+      ref: useRef<ReactCodeMirrorRef>({}),
+      extensions: [graphql(schema)],
+    },
+    variables: {
+      value: variables,
+      setValue: setVariables,
+      format: jsonFormat,
+      ref: useRef<ReactCodeMirrorRef>({}),
+    },
+    headers: {
+      value: headers,
+      setValue: setHeaders,
+      format: jsonFormat,
+      ref: useRef<ReactCodeMirrorRef>({}),
+    },
+    viewer: {
+      value: viewer,
+      setValue: setViewer,
+      readOnly: true,
+      ref: useRef<ReactCodeMirrorRef>({}),
+      extensions: [json()],
+    },
   };
 
   return (
     <Container maxW='1080px' centerContent>
-      <Heading as='h1' size='4xl' p={2} noOfLines={1}>
+      <Heading as='h2' p={2} noOfLines={1}>
         {NamePages.Editor}
       </Heading>
       <Flex w='100%'>
-        <Card w='48%' boxShadow='xl' m={2}>
-          <CardHeader>Editor</CardHeader>
-          <CardBody>
-            <CodeArea options={areas.editor} />
-          </CardBody>
-        </Card>
+        <Box w='50%'>
+          <InputEndpoint value={DefaultAPI} />
+        </Box>
         <Spacer />
-        <Card w='48%' boxShadow='xl' m={2}>
-          <CardHeader>Viewer</CardHeader>
-          <CardBody>
-            <CodeArea options={areas.viewer} />
-          </CardBody>
-        </Card>
+        <ButtonDoc>
+          <div>Lazy-Load DocComponent</div>
+        </ButtonDoc>
       </Flex>
+      <SectionCode areas={areas} />
     </Container>
   );
 }

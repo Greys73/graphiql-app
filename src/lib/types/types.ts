@@ -2,7 +2,7 @@ import { AuthError, Session } from '@supabase/supabase-js';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import { type IconType } from 'react-icons';
 import { ReactCodeMirrorProps, ReactCodeMirrorRef } from '@uiw/react-codemirror';
-import { MutableRefObject } from 'react';
+import { MutableRefObject, SetStateAction } from 'react';
 
 export interface AuthInputType {
   name: string;
@@ -45,6 +45,8 @@ export interface EditorPageProps {
 }
 
 export type TArea = {
+  value: string;
+  setValue: React.Dispatch<SetStateAction<string>>;
   ref: MutableRefObject<ReactCodeMirrorRef>;
   format?: Function;
   readOnly?: ReactCodeMirrorProps['readOnly'];
