@@ -1,3 +1,6 @@
+import React from 'react';
+import { TArea } from '@src/lib/types/types';
+import CodeArea from '@src/components/CodeArea';
 import {
   Accordion,
   AccordionButton,
@@ -11,9 +14,6 @@ import {
   TabPanels,
   Tabs,
 } from '@chakra-ui/react';
-import CodeArea from '@src/components/CodeArea';
-import { TArea } from '@src/lib/types/types';
-import React from 'react';
 
 type TProps = {
   areas: { [key: string]: TArea };

@@ -1,19 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { GraphQLSchema } from 'graphql';
 import { graphql, updateSchema } from 'cm6-graphql';
+import { EditorPageProps, TArea } from '@src/lib/types/types';
 import { ReactCodeMirrorRef } from '@uiw/react-codemirror';
 import { json } from '@codemirror/lang-json';
 import { Box, Container, Flex, Heading, Spacer, useToast } from '@chakra-ui/react';
-import { TArea } from '@src/lib/types/types';
 import { NamePages } from '@src/lib/constants/pages';
 import templateSchema from '@src/lib/templateSchema';
 import graphqlFormat from '@src/utils/graphql/graphqlFormat';
 import jsonFormat from '@src/utils/json/jsonFormat';
-import { EditorPageProps } from '@src/lib/types/types';
 import { showErrorToast } from '@src/utils/toasts';
 import InputEndpoint from './InputEndpoint';
+import ButtonDoc from './ButtonDoc';
+import SectionCode from './SectionCode';
 import {
   DefaultAPI,
   DefaultGraphQL,
@@ -21,9 +22,6 @@ import {
   DefaultVariables,
   DefaultViewer,
 } from '@src/lib/constants/editor';
-import ButtonDoc from './ButtonDoc';
-import SectionCode from './SectionCode';
-import React from 'react';
 
 export default function Editor({ errorAuth }: EditorPageProps) {
   const toast = useToast();

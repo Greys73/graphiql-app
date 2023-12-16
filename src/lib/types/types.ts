@@ -1,8 +1,8 @@
-import { AuthError, Session } from '@supabase/supabase-js';
+import { MutableRefObject, SetStateAction } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import { type IconType } from 'react-icons';
+import { AuthError, Session } from '@supabase/supabase-js';
 import { ReactCodeMirrorProps, ReactCodeMirrorRef } from '@uiw/react-codemirror';
-import { MutableRefObject, SetStateAction } from 'react';
 
 export interface AuthInputType {
   name: string;

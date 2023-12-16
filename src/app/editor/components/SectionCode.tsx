@@ -1,8 +1,8 @@
-import { Flex, Spacer } from '@chakra-ui/react';
 import React from 'react';
 import BoxCode from './BoxCode';
-import { TArea } from '@src/lib/types/types';
 import BoxAdvanced from './BoxAdvanced';
+import { Flex, Spacer } from '@chakra-ui/react';
+import { TArea } from '@src/lib/types/types';
 
 type TProps = {
   areas: { [key: string]: TArea };
