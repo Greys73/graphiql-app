@@ -13,7 +13,7 @@ function BoxCode({ name, options, children }: TProps) {
   return (
     <Card w='100%' m={1} boxShadow='xl'>
       <CardHeader p={2} textAlign='center' position='relative'>
-        <Divider/>
+        <Divider />
         <AbsoluteCenter bg='#fff' px='5' color='gray'>
           {name}
         </AbsoluteCenter>

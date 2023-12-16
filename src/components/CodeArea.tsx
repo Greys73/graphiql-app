@@ -50,6 +50,6 @@ const CodeArea = ({ options }: { options: TArea }) => {
   cmProps.extensions = extensions;
   cmProps.extensions?.push(theme);
 
-  return <CodeMirror ref={ref} {...cmProps} theme={githubLight}/>;
+  return <CodeMirror ref={ref} {...cmProps} theme={githubLight} />;
 };
 export default CodeArea;
