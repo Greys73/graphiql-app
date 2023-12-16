@@ -59,12 +59,14 @@ export default function Editor({ errorAuth }: EditorPageProps) {
       setValue: setVariables,
       format: jsonFormat,
       ref: useRef<ReactCodeMirrorRef>({}),
+      extensions: [json()],
     },
     headers: {
       value: headers,
       setValue: setHeaders,
       format: jsonFormat,
       ref: useRef<ReactCodeMirrorRef>({}),
+      extensions: [json()],
     },
     viewer: {
       value: viewer,

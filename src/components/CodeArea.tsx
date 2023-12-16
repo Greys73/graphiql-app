@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import React from 'react';
+import { githubLight } from '@uiw/codemirror-theme-github';
 import CodeMirror, { EditorView, ReactCodeMirrorProps } from '@uiw/react-codemirror';
 
 import { TArea } from '@src/lib/types/types';
@@ -49,6 +50,6 @@ const CodeArea = ({ options }: { options: TArea }) => {
   cmProps.extensions = extensions;
   cmProps.extensions?.push(theme);
 
-  return <CodeMirror ref={ref} {...cmProps} />;
+  return <CodeMirror ref={ref} {...cmProps} theme={githubLight}/>;
 };
 export default CodeArea;
