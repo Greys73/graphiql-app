@@ -4,7 +4,7 @@ import { Image } from '@chakra-ui/next-js';
 import NextLink from 'next/link';
 import Logo from '@src/assets/image/logo.svg';
 import AuthNavPanel from './AuthNavPanel';
-import { NamePages, PathPages } from '@src/lib/constants';
+import { NamePages, PathPages } from '@src/lib/constants/pages';
 import { HeaderProps } from '@src/lib/types/types';
 
 const Header = ({ isAuth, errorAuth }: HeaderProps) => {

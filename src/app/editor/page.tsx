@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 import EditorPage from './components/EditorPage';
 import { readUserSession } from '@src/lib/actions';
-import { PathPages } from '@src/lib/constants';
+import { PathPages } from '@src/lib/constants/pages';
 
 export default async function page() {
   const { data, error } = await readUserSession();

@@ -1,5 +1,5 @@
 'use client';
-import { NamePages } from '@src/lib/constants';
+import { NamePages } from '@src/lib/constants/pages';
 import { Container, Heading } from '@chakra-ui/react';
 import LoginForm from './LoginForm';
 
