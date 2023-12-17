@@ -1,22 +1,28 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
-import React from 'react';
+import { KeyboardEvent, useCallback } from 'react';
 import { githubLight } from '@uiw/codemirror-theme-github';
 import CodeMirror, { EditorView, ReactCodeMirrorProps } from '@uiw/react-codemirror';
-
+import { useToast } from '@chakra-ui/react';
 import { TArea } from '@src/lib/types/types';
+import { showErrorToast } from '@src/utils/toasts';
 
 const CodeArea = ({ options }: { options: TArea }) => {
+  const toast = useToast();
   const { value, setValue, ref, readOnly, extensions, format } = options;
 
-  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.ctrlKey && e.code === 'KeyS') {
       e.preventDefault();
-      if (format) setValue(format(value));
+      if (format) {
+        const result = format(value);
+        if (result.text) setValue(result.text);
+        if (result.error) showErrorToast(toast, result.error);
+      }
     }
   };
 
-  const onChange = React.useCallback((val: string) => {
+  const onChange = useCallback((val: string) => {
     setValue(val);
   }, []);
 

@@ -1,19 +1,20 @@
 import { buildClientSchema, getIntrospectionQuery, IntrospectionQuery } from 'graphql';
 import { request, gql } from 'graphql-request';
+import { DefaultAPI } from './constants/editor';
 
-const API = 'https://rickandmortyapi.com/graphql';
+const API = DefaultAPI;
 
 const templateSchema = async () => {
   try {
-    const schemaResponcse = await request<IntrospectionQuery>(
+    const schemaResponse = await request<IntrospectionQuery>(
       API,
       gql`
         ${getIntrospectionQuery()}
       `
     );
-    return buildClientSchema(schemaResponcse);
+    return { schema: buildClientSchema(schemaResponse), error: null };
   } catch (error) {
-    console.log((error as Error).message);
+    return { schema: null, error: `error creating GraphQL schema: ${(error as Error).message}` };
   }
 };
 

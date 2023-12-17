@@ -15,7 +15,7 @@ function ButtonDoc({ children }: { children: ReactNode }) {
 
   return (
     <>
-      <Button colorScheme='blue' onClick={onOpen}>
+      <Button colorScheme='base' onClick={onOpen}>
         Docs
       </Button>
       <Drawer placement='right' onClose={onClose} isOpen={isOpen} size='md'>
