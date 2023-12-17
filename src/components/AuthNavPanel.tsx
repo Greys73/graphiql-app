@@ -1,7 +1,7 @@
 'use client';
 import { Button, Flex, useToast, Link } from '@chakra-ui/react';
 import NextLink from 'next/link';
-import { NamePages, PathPages } from '@src/lib/constants';
+import { NamePages, PathPages } from '@src/lib/constants/pages';
 import { AuthNavPanelProps } from '@src/lib/types/types';
 import { logOut } from '@src/lib/actions';
 import { showErrorToast, showSuccessToast } from '@src/utils/toasts';
