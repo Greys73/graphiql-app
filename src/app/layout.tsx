@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
+  'use server';
   const { data, error } = await readUserSession();
   return (
     <html lang='en' className={fonts.roboto.variable}>
