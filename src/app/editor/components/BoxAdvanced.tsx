@@ -1,4 +1,4 @@
-import { TArea } from '@src/lib/types/types';
+import { TAreas } from '@src/lib/types/types';
 import CodeArea from '@src/components/CodeArea';
 import {
   Accordion,
@@ -14,11 +14,7 @@ import {
   Tabs,
 } from '@chakra-ui/react';
 
-type TProps = {
-  areas: { [key: string]: TArea };
-};
-
-function BoxAdvanced({ areas }: TProps) {
+function BoxAdvanced({ areas }: { areas: TAreas }) {
   return (
     <Accordion allowToggle>
       <AccordionItem>

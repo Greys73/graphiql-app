@@ -1,15 +1,8 @@
-import { ReactNode } from 'react';
-import { TArea } from '@src/lib/types/types';
+import { TBoxCode } from '@src/lib/types/types';
 import CodeArea from '@src/components/CodeArea';
 import { AbsoluteCenter, Card, CardBody, CardHeader, Divider } from '@chakra-ui/react';
 
-type TProps = {
-  name: string;
-  options: TArea;
-  children?: ReactNode;
-};
-
-function BoxCode({ name, options, children }: TProps) {
+function BoxCode({ name, options, children }: TBoxCode) {
   return (
     <Card w='100%' m={1} boxShadow='xl'>
       <CardHeader p={2} textAlign='center' position='relative'>

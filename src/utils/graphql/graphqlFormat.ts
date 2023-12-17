@@ -1,7 +1,4 @@
-type TEntity = {
-  name: string;
-  field: string | null;
-};
+import { TEntity } from '@src/lib/types/types';
 
 const innerTrim = (text: string) => text.replaceAll(/[\r\n]+/g, '').replaceAll(/ +/g, ' ');
 
@@ -77,7 +74,7 @@ const graphqlFormat = (code: string) => {
   const braceEnd = code.lastIndexOf('}');
   const query = innerTrim(code.slice(0, braceStart).trim());
   const field = formatSection(code.slice(braceStart, braceEnd), '  ');
-  return `${query} {\n${field}}\n`;
+  return { text: `${query} {\n${field}}\n`, error: null };
 };
 
 export default graphqlFormat;

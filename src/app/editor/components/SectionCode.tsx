@@ -1,13 +1,9 @@
 import BoxCode from './BoxCode';
 import BoxAdvanced from './BoxAdvanced';
 import { Flex, Spacer } from '@chakra-ui/react';
-import { TArea } from '@src/lib/types/types';
+import { TAreas } from '@src/lib/types/types';
 
-type TProps = {
-  areas: { [key: string]: TArea };
-};
-
-function SectionCode({ areas }: TProps) {
+function SectionCode({ areas }: { areas: TAreas }) {
   return (
     <Flex w='100%'>
       <BoxCode name='Request' options={areas.editor}>
