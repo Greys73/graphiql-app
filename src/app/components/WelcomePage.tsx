@@ -40,7 +40,7 @@ This is a fantastic developer tool to help you form queries and explore your Sch
   return (
     <Container maxW='1080px' centerContent>
       <Heading as='h1' size='2xl' my={14} p={2} textAlign={'center'}>
-        Welcome, are you new here?
+        {isAuth ? 'Welcome, my friend!' : ' Welcome, are you new here?'}
       </Heading>
       <Flex gap={6} justifyContent={'center'} flexWrap={'wrap'}>
         {isAuth ? (

@@ -8,6 +8,7 @@ import { showErrorToast, showSuccessToast } from '@src/utils/toasts';
 import { useForm } from 'react-hook-form';
 import AuthInputPassword from '@src/components/AuthInputPassword';
 import { SubmitAuth } from '@src/lib/types/types';
+import AuthGitHubButton from '@src/components/AuthGitHubButton';
 
 export default function LoginForm() {
   const schema = getLoginSchema();
@@ -31,21 +32,24 @@ export default function LoginForm() {
   }
 
   return (
-    <Flex minW='280px' w={'40%'} as='form' direction='column' onSubmit={handleSubmit(onSubmit)}>
-      <AuthInput
-        name='Email'
-        type='email'
-        invalidMessage={errors.email?.message}
-        register={register('email')}
-      />
-      <AuthInputPassword
-        name='Password'
-        invalidMessage={errors.password?.message}
-        register={register('password')}
-      />
-      <Button mt={4} colorScheme='base' isLoading={isSubmitting} type='submit'>
-        Login
-      </Button>
-    </Flex>
+    <>
+      <Flex minW='280px' w={'40%'} as='form' direction='column' onSubmit={handleSubmit(onSubmit)}>
+        <AuthInput
+          name='Email'
+          type='email'
+          invalidMessage={errors.email?.message}
+          register={register('email')}
+        />
+        <AuthInputPassword
+          name='Password'
+          invalidMessage={errors.password?.message}
+          register={register('password')}
+        />
+        <Button mt={4} colorScheme='base' isLoading={isSubmitting} type='submit'>
+          Login
+        </Button>
+      </Flex>
+      <AuthGitHubButton />
+    </>
   );
 }

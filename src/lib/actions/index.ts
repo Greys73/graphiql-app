@@ -4,7 +4,8 @@ import createSupabaseServerClient from '../supabase/server';
 
 export async function readUserSession() {
   const supabase = await createSupabaseServerClient();
-  return supabase.auth.getSession();
+  const result = await supabase.auth.getSession();
+  return JSON.stringify(result);
 }
 
 export async function signUp({ email, password }: { email: string; password: string }) {

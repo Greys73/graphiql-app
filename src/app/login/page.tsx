@@ -4,7 +4,9 @@ import { redirect } from 'next/navigation';
 import { PathPages } from '@src/lib/constants';
 
 export default async function page() {
-  const { data } = await readUserSession();
+  const result = await readUserSession();
+  const { data } = JSON.parse(result);
   if (data.session) return redirect(PathPages.Home);
+
   return <LoginPage />;
 }
