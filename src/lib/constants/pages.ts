@@ -1,6 +1,6 @@
 export enum NamePages {
   Home = 'Home',
-  Editor = 'Editor',
+  Editor = 'PlayGround',
   SignUp = 'Sign Up',
   Login = 'Login',
 }

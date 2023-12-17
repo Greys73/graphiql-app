@@ -3,7 +3,7 @@ import { Container, Heading, Flex, useToast } from '@chakra-ui/react';
 import AuthCard from '@src/components/AuthCard';
 import { MdOutlineLogin, MdAppRegistration, MdRebaseEdit } from 'react-icons/md';
 import { WelcomePageProps } from '@src/lib/types/types';
-import { NamePages, PathPages } from '@src/lib/constants';
+import { NamePages, PathPages } from '@src/lib/constants/pages';
 import { showErrorToast } from '@src/utils/toasts';
 
 export default function WelcomePage({ isAuth, errorAuth }: WelcomePageProps) {
