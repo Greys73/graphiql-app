@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { TArea } from '@src/lib/types/types';
 import CodeArea from '@src/components/CodeArea';
 import { AbsoluteCenter, Card, CardBody, CardHeader, Divider } from '@chakra-ui/react';

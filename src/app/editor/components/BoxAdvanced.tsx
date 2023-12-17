@@ -1,4 +1,3 @@
-import React from 'react';
 import { TArea } from '@src/lib/types/types';
 import CodeArea from '@src/components/CodeArea';
 import {

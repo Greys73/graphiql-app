@@ -1,4 +1,3 @@
-import React from 'react';
 import BoxCode from './BoxCode';
 import BoxAdvanced from './BoxAdvanced';
 import { Flex, Spacer } from '@chakra-ui/react';
