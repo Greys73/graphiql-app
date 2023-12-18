@@ -32,8 +32,8 @@ export default function LoginForm() {
   }
 
   return (
-    <>
-      <Flex minW='280px' w={'40%'} as='form' direction='column' onSubmit={handleSubmit(onSubmit)}>
+    <Flex minW='280px' w={'40%'} direction='column'>
+      <Flex as='form' direction='column' onSubmit={handleSubmit(onSubmit)}>
         <AuthInput
           name='Email'
           type='email'
@@ -49,7 +49,7 @@ export default function LoginForm() {
           Login
         </Button>
       </Flex>
-      <AuthGitHubButton />
-    </>
+      <AuthGitHubButton label='Login with GitHub' />
+    </Flex>
   );
 }
