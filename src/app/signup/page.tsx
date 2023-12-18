@@ -7,6 +7,6 @@ export default async function page() {
   const result = await readUserSession();
   const { data } = JSON.parse(result);
 
-  if (data.session) return redirect(PathPages.Home);
+  if (data.session) return redirect(PathPages.Editor);
   return <SignUpPage />;
 }
