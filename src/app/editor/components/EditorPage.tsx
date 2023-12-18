@@ -10,7 +10,7 @@ import { Box, Container, Flex, Heading, Spacer, useToast } from '@chakra-ui/reac
 import { NamePages } from '@src/lib/constants/pages';
 import templateSchema from '@src/lib/templateSchema';
 import graphqlFormat from '@src/utils/graphql/graphqlFormat';
-import { jsonFormat } from '@src/utils/utils';
+import { jsonFormat, setViewText } from '@src/utils/utils';
 import { showErrorToast } from '@src/utils/toasts';
 import InputEndpoint from './InputEndpoint';
 import ButtonDoc from './ButtonDoc';
@@ -32,47 +32,51 @@ export default function Editor({ errorAuth }: EditorPageProps) {
     templateSchema().then(({ schema, error }) => {
       if (schema) {
         Object.values(areas).forEach((area) => {
-          const view = area.ref.current.view;
+          const view = area.ref.current?.view;
           if (view) updateSchema(view, schema);
-          area.ref.current.state?.toJSON();
         });
         setSchema(schema);
       } else {
         showErrorToast(toast, error);
       }
     });
+    setTimeout(() => {
+      // console.log('EDITOR: ', areas.editor.ref.current.state?.doc.toString())
+      const response = `{
+  "data": {
+    "characters": {
+      "count": 2
+    },
+    "location": {
+      "id": "1"
+    }
+  }
+}`;
+      if (areas.viewer.ref.current?.view) setViewText(areas.viewer.ref.current.view, response);
+    }, 500);
   }, []);
-
-  const [editor, setEditor] = useState(DefaultGraphQL);
-  const [viewer, setViewer] = useState(DefaultViewer);
-  const [variables, setVariables] = useState(DefaultVariables);
-  const [headers, setHeaders] = useState(DefaultHeaders);
 
   const areas: TAreas = {
     editor: {
-      value: editor,
-      setValue: setEditor,
+      initialState: DefaultGraphQL,
       format: graphqlFormat,
       ref: useRef<ReactCodeMirrorRef>({}),
       extensions: [graphql(schema)],
     },
     variables: {
-      value: variables,
-      setValue: setVariables,
+      initialState: DefaultVariables,
       format: jsonFormat,
       ref: useRef<ReactCodeMirrorRef>({}),
       extensions: [json()],
     },
     headers: {
-      value: headers,
-      setValue: setHeaders,
+      initialState: DefaultHeaders,
       format: jsonFormat,
       ref: useRef<ReactCodeMirrorRef>({}),
       extensions: [json()],
     },
     viewer: {
-      value: viewer,
-      setValue: setViewer,
+      initialState: DefaultViewer,
       readOnly: true,
       ref: useRef<ReactCodeMirrorRef>({}),
       extensions: [json()],

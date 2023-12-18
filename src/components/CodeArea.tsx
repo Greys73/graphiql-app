@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
-import { KeyboardEvent, useCallback } from 'react';
+import { KeyboardEvent, useCallback, useState } from 'react';
 import { githubLight } from '@uiw/codemirror-theme-github';
 import CodeMirror, { EditorView, ReactCodeMirrorProps } from '@uiw/react-codemirror';
 import { useToast } from '@chakra-ui/react';
@@ -9,7 +9,8 @@ import { showErrorToast } from '@src/utils/toasts';
 
 const CodeArea = ({ options }: { options: TArea }) => {
   const toast = useToast();
-  const { value, setValue, ref, readOnly, extensions, format } = options;
+  const [value, setValue] = useState(options.initialState);
+  const { ref, readOnly, extensions, format } = options;
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.ctrlKey && e.code === 'KeyS') {
