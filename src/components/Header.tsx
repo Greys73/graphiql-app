@@ -8,11 +8,6 @@ import { NamePages, PathPages } from '@src/lib/constants/pages';
 import { HeaderProps } from '@src/lib/types/types';
 
 const Header = ({ isAuth, errorAuth }: HeaderProps) => {
-  const pages = [
-    { name: NamePages.Home, path: PathPages.Home },
-    { name: NamePages.Editor, path: PathPages.Editor },
-  ];
-
   return (
     <Flex as='header' align='center' w='100%' h={'100px'}>
       <Container display={'flex'} alignItems={'center'} maxW='1080px' justifyContent={'space-between'}>
@@ -32,15 +27,18 @@ const Header = ({ isAuth, errorAuth }: HeaderProps) => {
           </Heading>
         </Link>
         <Flex gap='6' alignItems={'center'}>
-          {pages.map((page) => {
-            return (
-              <Link as={NextLink} key={page.path} href={page.path}>
-                <Button variant={'link'} fontSize={'16px'} fontWeight={'300'} color='link.100'>
-                  {page.name}
-                </Button>
-              </Link>
-            );
-          })}
+          <Link as={NextLink} key={PathPages.Home} href={PathPages.Home}>
+            <Button variant={'link'} fontSize={'16px'} fontWeight={'300'} color='link.100'>
+              {NamePages.Home}
+            </Button>
+          </Link>
+          {isAuth && (
+            <Link as={NextLink} key={PathPages.Editor} href={PathPages.Editor}>
+              <Button variant={'link'} fontSize={'16px'} fontWeight={'300'} color='link.100'>
+                {NamePages.Editor}
+              </Button>
+            </Link>
+          )}
           <AuthNavPanel isAuth={isAuth} errorAuth={errorAuth} />
         </Flex>
       </Container>
