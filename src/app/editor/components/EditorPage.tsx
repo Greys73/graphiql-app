@@ -22,6 +22,7 @@ import {
   DefaultVariables,
   DefaultViewer,
 } from '@src/lib/constants/editor';
+import ButtonPlay from './ButtonPlay';
 
 export default function Editor({ errorAuth }: EditorPageProps) {
   const toast = useToast();
@@ -97,6 +98,12 @@ export default function Editor({ errorAuth }: EditorPageProps) {
           <div>Lazy-Load DocComponent</div>
         </ButtonDoc>
       </Flex>
+      <ButtonPlay
+        isError={false}
+        onClick={(e) => {
+          console.log(e);
+        }}
+      />
       <SectionCode areas={areas} />
     </Container>
   );
