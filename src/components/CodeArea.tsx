@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import { KeyboardEvent, useCallback, useState } from 'react';
 import { githubLight } from '@uiw/codemirror-theme-github';
@@ -48,14 +47,12 @@ const CodeArea = ({ options }: { options: TArea }) => {
 
   const theme = EditorView.theme({
     '&.cm-editor': { backgroundColor: readOnly ? '#f5f5f5' : '#fff' },
-
-    '&.cm-focused': {
-      outline: 'none',
-    },
+    '&.cm-focused': { outline: 'none' },
   });
 
   cmProps.extensions = extensions;
   cmProps.extensions?.push(theme);
+  cmProps.extensions?.push(EditorView.lineWrapping);
 
   return <CodeMirror ref={ref} {...cmProps} theme={githubLight} />;
 };
