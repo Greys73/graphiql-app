@@ -8,7 +8,7 @@ import { ReactCodeMirrorRef } from '@uiw/react-codemirror';
 import { json } from '@codemirror/lang-json';
 import { Box, Container, Flex, Heading, Spacer, useToast } from '@chakra-ui/react';
 import { NamePages } from '@src/lib/constants/pages';
-import templateSchema from '@src/lib/templateSchema';
+import templateSchema, { makeRequest } from '@src/lib/templateSchema';
 import graphqlFormat from '@src/utils/graphql/graphqlFormat';
 import { jsonFormat, setViewText } from '@src/utils/utils';
 import { showErrorToast } from '@src/utils/toasts';
@@ -100,8 +100,12 @@ export default function Editor({ errorAuth }: EditorPageProps) {
       </Flex>
       <ButtonPlay
         isError={false}
-        onClick={(e) => {
-          console.log(e);
+        onClick={async (e) => {
+          const res = await makeRequest(DefaultAPI, areas.editor.ref.current.state?.doc.toString()!);
+          const code = await res.response?.json();
+          console.log(code);
+          const str = JSON.stringify(code, null, 2);
+          if (areas.viewer.ref.current?.view) await setViewText(areas.viewer.ref.current.view, str);
         }}
       />
       <SectionCode areas={areas} />
