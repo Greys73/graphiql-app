@@ -22,12 +22,12 @@ export const makeRequest = async (url: string = DefaultAPI, query: string) => {
   try {
     const response = await fetch(url, {
       method: 'POST',
-      headers: {'Content-type': 'application/json'},
-      body: JSON.stringify({query})
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify({ query }),
     });
     return { response, error: null };
   } catch (error) {
     return { response: null, error: `error: ${(error as Error).message}` };
   }
-}
+};
 export default templateSchema;
