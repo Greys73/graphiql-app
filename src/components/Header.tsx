@@ -74,13 +74,13 @@ const Header = ({ isAuth, errorAuth }: HeaderProps) => {
           </MotionHeading>
         </MotionLink>
         <Flex gap='4' alignItems={'center'}>
-          <Link as={NextLink} key={PathPages.Home} href={PathPages.Home}>
+          <Link as={NextLink} href={PathPages.Home}>
             <Button variant={'link'} fontSize={'16px'} fontWeight={'300'} color='link.100'>
               {NamePages.Home}
             </Button>
           </Link>
           {isAuth && (
-            <Link as={NextLink} key={PathPages.Editor} href={PathPages.Editor}>
+            <Link as={NextLink} href={PathPages.Editor}>
               <Button variant={'link'} fontSize={'16px'} fontWeight={'300'} color='link.100'>
                 {NamePages.Editor}
               </Button>
