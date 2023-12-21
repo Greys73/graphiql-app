@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { MouseEventHandler, useEffect, useRef, useState } from 'react';
 import { GraphQLSchema } from 'graphql';
 import { graphql, updateSchema } from 'cm6-graphql';
 import { EditorPageProps, TAreas } from '@src/lib/types/types';
@@ -41,20 +41,6 @@ export default function Editor({ errorAuth }: EditorPageProps) {
         showErrorToast(toast, error);
       }
     });
-    setTimeout(() => {
-      // console.log('EDITOR: ', areas.editor.ref.current.state?.doc.toString())
-      const response = `{
-  "data": {
-    "characters": {
-      "count": 2
-    },
-    "location": {
-      "id": "1"
-    }
-  }
-}`;
-      if (areas.viewer.ref.current?.view) setViewText(areas.viewer.ref.current.view, response);
-    }, 500);
   }, []);
 
   const areas: TAreas = {
@@ -84,6 +70,16 @@ export default function Editor({ errorAuth }: EditorPageProps) {
     },
   };
 
+  const onClickPlay: MouseEventHandler<HTMLButtonElement> = () => {
+    const queryText = areas.editor.ref.current.state?.toJSON().doc;
+    if (queryText) {
+      makeRequest(DefaultAPI, queryText).then((response) => {
+        const code = JSON.stringify(response.data, null, 2);
+        if (areas.viewer.ref.current?.view) setViewText(areas.viewer.ref.current.view, code);
+      });
+    }
+  };
+
   return (
     <Container maxW='1080px' centerContent>
       <Heading as='h1' size='xl' p={2} noOfLines={1}>
@@ -98,16 +94,7 @@ export default function Editor({ errorAuth }: EditorPageProps) {
           <div>Lazy-Load DocComponent</div>
         </ButtonDoc>
       </Flex>
-      <ButtonPlay
-        isError={false}
-        onClick={async (e) => {
-          const res = await makeRequest(DefaultAPI, areas.editor.ref.current.state?.doc.toString()!);
-          const code = await res.response?.json();
-          console.log(code);
-          const str = JSON.stringify(code, null, 2);
-          if (areas.viewer.ref.current?.view) await setViewText(areas.viewer.ref.current.view, str);
-        }}
-      />
+      <ButtonPlay isError={false} onClick={onClickPlay} />
       <SectionCode areas={areas} />
     </Container>
   );
