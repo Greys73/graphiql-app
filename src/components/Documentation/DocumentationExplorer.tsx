@@ -36,7 +36,7 @@ const getType = (type: IntrospectionOutputTypeRef | IntrospectionInputTypeRef): 
   }
 };
 
-export default function DocumentationExplorer() {
+export function DocumentationExplorer() {
   const dispatch = useAppDispatch();
   const { schema, paths } = useAppSelector((state) => state.documentationReducer);
 

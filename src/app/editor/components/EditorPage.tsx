@@ -22,9 +22,14 @@ import {
   DefaultVariables,
   DefaultViewer,
 } from '@src/lib/constants/editor';
-import DocumentationExplorer from '../../../components/Documentation/DocumentationExplorer';
 import { useAppDispatch } from '../../../lib/hooks/redux';
 import { setSchema as SetSchemaInStore } from '../../../store/reducers/DocumentationSlice';
+
+const DocumentationExplorer = lazy(() =>
+  import('@src/components/Documentation/DocumentationExplorer.tsx').then(({ DocumentationExplorer }) => ({
+    default: DocumentationExplorer,
+  }))
+);
 
 export default function Editor({ errorAuth }: EditorPageProps) {
   const dispatch = useAppDispatch();
@@ -103,7 +108,9 @@ export default function Editor({ errorAuth }: EditorPageProps) {
 
         {showDocumentation && (
           <ButtonDoc>
-            <DocumentationExplorer />
+            <Suspense fallback={<Text>Loading...</Text>}>
+              <DocumentationExplorer />
+            </Suspense>
           </ButtonDoc>
         )}
       </Flex>

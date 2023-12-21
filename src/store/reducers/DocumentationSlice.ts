@@ -16,11 +16,14 @@ export const documentationSlice = createSlice({
   name: 'Documentation',
   initialState,
   reducers: {
-    setSchema: (state, action: PayloadAction<IntrospectionSchema | null | undefined>) => {
+    setSchema: (
+      state: IDocumentationState,
+      action: PayloadAction<IntrospectionSchema | null | undefined>
+    ) => {
       state.schema = action.payload;
       state.paths = [];
     },
-    pushPath: (state, action: PayloadAction<IDocPathEntry>) => {
+    pushPath: (state: IDocumentationState, action: PayloadAction<IDocPathEntry>) => {
       state.paths.push(action.payload);
     },
     popPath: (state) => {
