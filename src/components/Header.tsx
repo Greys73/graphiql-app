@@ -7,6 +7,7 @@ import AuthNavPanel from './AuthNavPanel';
 import { NamePages, PathPages } from '@src/lib/constants/pages';
 import { HeaderProps } from '@src/lib/types/types';
 import { useScroll, useTransform, motion, useAnimation, useMotionValueEvent } from 'framer-motion';
+import LangControl from './LangControl';
 
 const MotionFlex = motion(Flex);
 const MotionLink = motion(Link);
@@ -72,7 +73,7 @@ const Header = ({ isAuth, errorAuth }: HeaderProps) => {
             </Highlight>
           </MotionHeading>
         </MotionLink>
-        <Flex gap='6' alignItems={'center'}>
+        <Flex gap='4' alignItems={'center'}>
           <Link as={NextLink} key={PathPages.Home} href={PathPages.Home}>
             <Button variant={'link'} fontSize={'16px'} fontWeight={'300'} color='link.100'>
               {NamePages.Home}
@@ -86,6 +87,7 @@ const Header = ({ isAuth, errorAuth }: HeaderProps) => {
             </Link>
           )}
           <AuthNavPanel isAuth={isAuth} errorAuth={errorAuth} />
+          <LangControl />
         </Flex>
       </Container>
     </MotionFlex>
