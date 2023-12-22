@@ -5,6 +5,7 @@ import CodeMirror, { EditorView, ReactCodeMirrorProps } from '@uiw/react-codemir
 import { useToast } from '@chakra-ui/react';
 import { TArea } from '@src/lib/types/types';
 import { showErrorToast } from '@src/utils/toasts';
+import '@src/styles/codeArea.css';
 
 const CodeArea = ({ options }: { options: TArea }) => {
   const toast = useToast();
@@ -54,6 +55,6 @@ const CodeArea = ({ options }: { options: TArea }) => {
   cmProps.extensions?.push(theme);
   cmProps.extensions?.push(EditorView.lineWrapping);
 
-  return <CodeMirror ref={ref} {...cmProps} theme={githubLight} />;
+  return <CodeMirror ref={ref} {...cmProps} theme={githubLight} className='codeArea' />;
 };
 export default CodeArea;

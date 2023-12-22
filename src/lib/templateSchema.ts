@@ -25,7 +25,8 @@ export const makeRequest = async (url: string = DefaultAPI, query: string) => {
       headers: { 'Content-type': 'application/json' },
       body: JSON.stringify({ query }),
     });
-    return { data: response.json(), error: null };
+    if (response.ok) return { data: response.json(), error: null };
+    throw new Error('Please, fix query errors!');
   } catch (error) {
     return { data: null, error: `error: ${(error as Error).message}` };
   }

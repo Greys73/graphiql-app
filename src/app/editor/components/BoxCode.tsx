@@ -11,7 +11,7 @@ function BoxCode({ name, options, children }: TBoxCode) {
           {name}
         </AbsoluteCenter>
       </CardHeader>
-      <CardBody h='100%' p={2}>
+      <CardBody h='100%' maxH='500px' p={2}>
         <CodeArea options={options} />
       </CardBody>
       {children}

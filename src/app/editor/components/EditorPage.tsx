@@ -70,13 +70,17 @@ export default function Editor({ errorAuth }: EditorPageProps) {
     },
   };
 
-  const onClickPlay: MouseEventHandler<HTMLButtonElement> = () => {
-    const queryText = areas.editor.ref.current.state?.toJSON().doc;
+  const onClickPlay: MouseEventHandler<HTMLButtonElement> = async () => {
+    const queryText = areas.editor.ref.current.view?.state.doc.toString();
+    const viewer = areas.viewer.ref.current.view;
     if (queryText) {
-      makeRequest(DefaultAPI, queryText).then((response) => {
-        const code = JSON.stringify(response.data, null, 2);
-        if (areas.viewer.ref.current?.view) setViewText(areas.viewer.ref.current.view, code);
-      });
+      const response = await makeRequest(DefaultAPI, queryText);
+      if (response.error) {
+        showErrorToast(toast, response.error);
+      } else {
+        const code = JSON.stringify(await response.data, null, 2);
+        if (viewer) setViewText(viewer, code);
+      }
     }
   };
 
