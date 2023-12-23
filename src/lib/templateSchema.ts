@@ -1,5 +1,5 @@
-import { buildClientSchema, getIntrospectionQuery, IntrospectionQuery } from 'graphql';
-import { request, gql } from 'graphql-request';
+import { getIntrospectionQuery, IntrospectionQuery } from 'graphql';
+import { gql, request } from 'graphql-request';
 import { DefaultAPI } from './constants/editor';
 
 const API = DefaultAPI;
@@ -12,7 +12,8 @@ export const templateSchema = async () => {
         ${getIntrospectionQuery()}
       `
     );
-    return { schema: buildClientSchema(schemaResponse), error: null };
+
+    return { schemaResponse, error: null };
   } catch (error) {
     return { schema: null, error: `error creating GraphQL schema: ${(error as Error).message}` };
   }

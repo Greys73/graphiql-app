@@ -32,8 +32,8 @@ export default function SignUpForm() {
   }
 
   return (
-    <>
-      <Flex minW='280px' w={'40%'} as='form' direction='column' onSubmit={handleSubmit(onSubmit)}>
+    <Flex minW='280px' w={'40%'} direction='column'>
+      <Flex as='form' direction='column' onSubmit={handleSubmit(onSubmit)}>
         <AuthInput
           name='Email'
           type='email'
@@ -54,7 +54,7 @@ export default function SignUpForm() {
           Sign Up
         </Button>
       </Flex>
-      <AuthGitHubButton />
-    </>
+      <AuthGitHubButton label='Sign Up with GitHub' />
+    </Flex>
   );
 }
