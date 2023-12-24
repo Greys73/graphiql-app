@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
-import { useEffect, useRef, useState } from 'react';
-import { GraphQLSchema } from 'graphql';
+import { useEffect, useRef, useState, lazy, Suspense } from 'react';
+import { buildClientSchema, GraphQLSchema } from 'graphql';
 import { graphql, updateSchema } from 'cm6-graphql';
 import { EditorPageProps, TAreas } from '@src/lib/types/types';
 import { ReactCodeMirrorRef } from '@uiw/react-codemirror';
 import { json } from '@codemirror/lang-json';
-import { Box, Container, Flex, Heading, Spacer, useToast } from '@chakra-ui/react';
+import { Box, Container, Flex, Heading, Spacer, Text, useToast } from '@chakra-ui/react';
 import { NamePages } from '@src/lib/constants/pages';
 import templateSchema from '@src/lib/templateSchema';
 import graphqlFormat from '@src/utils/graphql/graphqlFormat';
@@ -22,23 +22,38 @@ import {
   DefaultVariables,
   DefaultViewer,
 } from '@src/lib/constants/editor';
+import { useAppDispatch } from '../../../lib/hooks/redux';
+import { setSchema as SetSchemaInStore } from '../../../store/reducers/DocumentationSlice';
+
+const DocumentationExplorer = lazy(() =>
+  import('@src/components/Documentation/DocumentationExplorer.tsx').then(({ DocumentationExplorer }) => ({
+    default: DocumentationExplorer,
+  }))
+);
 
 export default function Editor({ errorAuth }: EditorPageProps) {
+  const dispatch = useAppDispatch();
   const toast = useToast();
   if (errorAuth) showErrorToast(toast, errorAuth.message);
   // TODO: заменить на работу со store
   const [schema, setSchema] = useState<GraphQLSchema>();
   useEffect(() => {
-    templateSchema().then(({ schema, error }) => {
-      if (schema) {
-        Object.values(areas).forEach((area) => {
-          const view = area.ref.current.view;
-          if (view) updateSchema(view, schema);
-          area.ref.current.state?.toJSON();
-        });
-        setSchema(schema);
+    templateSchema().then(({ schemaResponse, error }) => {
+      if (schemaResponse) {
+        dispatch(SetSchemaInStore(schemaResponse?.__schema));
+        const schema = buildClientSchema(schemaResponse);
+        if (schema) {
+          Object.values(areas).forEach((area) => {
+            const view = area.ref.current.view;
+            if (view) updateSchema(view, schema);
+            area.ref.current.state?.toJSON();
+          });
+          setSchema(schema);
+          setShowDocumentation(true);
+        } else setSchema(undefined);
       } else {
         showErrorToast(toast, error);
+        setShowDocumentation(false);
       }
     });
   }, []);
@@ -47,6 +62,7 @@ export default function Editor({ errorAuth }: EditorPageProps) {
   const [viewer, setViewer] = useState(DefaultViewer);
   const [variables, setVariables] = useState(DefaultVariables);
   const [headers, setHeaders] = useState(DefaultHeaders);
+  const [showDocumentation, setShowDocumentation] = useState(false);
 
   const areas: TAreas = {
     editor: {
@@ -89,9 +105,14 @@ export default function Editor({ errorAuth }: EditorPageProps) {
           <InputEndpoint value={DefaultAPI} />
         </Box>
         <Spacer />
-        <ButtonDoc>
-          <div>Lazy-Load DocComponent</div>
-        </ButtonDoc>
+
+        {showDocumentation && (
+          <ButtonDoc>
+            <Suspense fallback={<Text>Loading...</Text>}>
+              <DocumentationExplorer />
+            </Suspense>
+          </ButtonDoc>
+        )}
       </Flex>
       <SectionCode areas={areas} />
     </Container>
