@@ -64,3 +64,9 @@ export type TBoxCode = {
   options: TArea;
   children?: ReactNode;
 };
+
+export type TQuery = {
+  query: string;
+  variables?: string | null;
+  headers?: string | null;
+};

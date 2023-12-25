@@ -87,14 +87,19 @@ export default function Editor({ errorAuth }: EditorPageProps) {
   };
 
   const onClickPlay: MouseEventHandler<HTMLButtonElement> = async () => {
-    const queryText = areas.editor.ref.current.view?.state.doc.toString();
+    const query = areas.editor.ref.current.view?.state.doc.toString();
+    const variables = areas.variables.ref.current.view?.state.doc.toString();
+    const headers = areas.headers.ref.current.view?.state.doc.toString();
     const viewer = areas.viewer.ref.current.view;
-    if (queryText) {
-      const response = await makeRequest(DefaultAPI, queryText);
-      if (response.error) {
-        showErrorToast(toast, response.error);
-      } else {
-        const code = JSON.stringify(await response.data, null, 2);
+    if (query) {
+      const { data, errors } = await makeRequest(DefaultAPI, { query, variables, headers });
+      if (errors) {
+        errors.forEach((error: Error) => {
+          showErrorToast(toast, error.message);
+        });
+      }
+      if (data) {
+        const code = JSON.stringify(await data, null, 2);
         if (viewer) setViewText(viewer, code);
       }
     }

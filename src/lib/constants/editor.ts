@@ -38,4 +38,4 @@ export const DefaultViewer = `{
 
 export const DefaultVariables = '{ "name": "Rick" }';
 
-export const DefaultHeaders = '{ "Cache-Control": "max-age=0" }';
+export const DefaultHeaders = '{ "Content-Length": "1000" }';
