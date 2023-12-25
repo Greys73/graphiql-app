@@ -1,40 +1,19 @@
 export const DefaultAPI = 'https://rickandmortyapi.com/graphql';
 
-export const DefaultGraphQL = `query {
-  characters(page: 2) {
-    info {
-      count
-    }
+export const DefaultGraphQL = `query Ricks($name: String){
+  characters ( filter: {name: $name}){
     results {
       name
+      gender
+      location {
+        name
+      }
     }
-  }
-  location(id: 1) {
-    id
   }
 }
 `;
 
-export const DefaultViewer = `{
-  "data": {
-    "characters": {
-      "info": {
-        "count": 2
-      },
-      "results": [
-        {
-          "name": "Aqua Morty"
-        },
-        {
-          "name": "Aqua Rick"
-        },
-      ]
-    },
-    "location": {
-      "id": "1"
-    }
-  }
-}`;
+export const DefaultViewer = '';
 
 export const DefaultVariables = '{ "name": "Rick" }';
 

@@ -16,9 +16,6 @@ function ButtonPlay({ isError, onClick }: TProps) {
       aria-label={'Search database'}
       icon={<ArrowRightIcon />}
       onClick={onClick}
-      onMouseEnter={() => {
-        console.log('Fix all Errors!');
-      }}
       position='relative'
       top='2rem'
       zIndex='2'

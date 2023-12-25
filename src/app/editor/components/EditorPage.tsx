@@ -8,14 +8,14 @@ import { ReactCodeMirrorRef } from '@uiw/react-codemirror';
 import { json } from '@codemirror/lang-json';
 import { Box, Container, Flex, Heading, Spacer, Text, useToast } from '@chakra-ui/react';
 import { NamePages } from '@src/lib/constants/pages';
-import templateSchema, { makeRequest } from '@src/lib/templateSchema';
+import { getAPISchema, makeRequest } from '@src/lib/rootAPI';
 import graphqlFormat from '@src/utils/graphql/graphqlFormat';
 import { jsonFormat, setViewText } from '@src/utils/utils';
 import { showErrorToast } from '@src/utils/toasts';
 import InputEndpoint from './InputEndpoint';
 import ButtonDoc from './ButtonDoc';
 import SectionCode from './SectionCode';
-import { useAppDispatch } from '../../../lib/hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../../lib/hooks/redux';
 import { setSchema as SetSchemaInStore } from '../../../store/reducers/DocumentationSlice';
 import {
   DefaultAPI,
@@ -36,12 +36,14 @@ export default function Editor({ errorAuth }: EditorPageProps) {
   const dispatch = useAppDispatch();
   const toast = useToast();
   if (errorAuth) showErrorToast(toast, errorAuth.message);
-  // TODO: заменить на работу со store
+  const { URL } = useAppSelector((state) => state.APIReducer);
   const [schema, setSchema] = useState<GraphQLSchema>();
-  useEffect(() => {
-    templateSchema().then(({ schemaResponse, error }) => {
+  const [showDocumentation, setShowDocumentation] = useState(false);
+
+  const reloadAPI = () => {
+    getAPISchema(URL).then(({ schemaResponse, error }) => {
       if (schemaResponse) {
-        dispatch(SetSchemaInStore(schemaResponse?.__schema));
+        dispatch(SetSchemaInStore(schemaResponse.__schema));
         const schema = buildClientSchema(schemaResponse);
         if (schema) {
           Object.values(areas).forEach((area) => {
@@ -56,8 +58,11 @@ export default function Editor({ errorAuth }: EditorPageProps) {
         setShowDocumentation(false);
       }
     });
-  }, []);
-  const [showDocumentation, setShowDocumentation] = useState(false);
+  };
+
+  useEffect(() => {
+    reloadAPI();
+  }, [URL]);
 
   const areas: TAreas = {
     editor: {
@@ -92,7 +97,7 @@ export default function Editor({ errorAuth }: EditorPageProps) {
     const headers = areas.headers.ref.current.view?.state.doc.toString();
     const viewer = areas.viewer.ref.current.view;
     if (query) {
-      const { data, errors } = await makeRequest(DefaultAPI, { query, variables, headers });
+      const { data, errors } = await makeRequest(URL, { query, variables, headers });
       if (errors) {
         errors.forEach((error: Error) => {
           showErrorToast(toast, error.message);
