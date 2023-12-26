@@ -6,8 +6,8 @@ import { getLoginSchema } from '@src/lib/schema';
 import { login } from '@src/lib/actions';
 import { showErrorToast, showSuccessToast } from '@src/utils/toasts';
 import { useForm } from 'react-hook-form';
-import AuthInputPassword from '@src/components/AuthInputPassword';
 import { SubmitAuth } from '@src/lib/types/types';
+import { FaLock, FaUser } from 'react-icons/fa';
 import AuthGitHubButton from '@src/components/AuthGitHubButton';
 
 export default function LoginForm() {
@@ -35,13 +35,16 @@ export default function LoginForm() {
     <Flex minW='280px' w={'40%'} direction='column'>
       <Flex as='form' direction='column' onSubmit={handleSubmit(onSubmit)}>
         <AuthInput
+          icon={FaUser}
           name='Email'
           type='email'
           invalidMessage={errors.email?.message}
           register={register('email')}
         />
-        <AuthInputPassword
+        <AuthInput
+          icon={FaLock}
           name='Password'
+          type='password'
           invalidMessage={errors.password?.message}
           register={register('password')}
         />
