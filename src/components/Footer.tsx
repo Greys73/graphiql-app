@@ -10,7 +10,7 @@ const Footer = () => {
       name: 'Greys73',
       github: 'https://github.com/greys73',
     },
-    { name: 'duxcoder', github: 'https://github.com/Duxcoder/' },
+    { name: 'Duxcoder', github: 'https://github.com/Duxcoder/' },
     {
       name: 'TNikolay',
       github: 'https://github.com/tnikolay',
