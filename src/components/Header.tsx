@@ -7,6 +7,7 @@ import AuthNavPanel from './AuthNavPanel';
 import { NamePages, PathPages } from '@src/lib/constants/pages';
 import { HeaderProps } from '@src/lib/types/types';
 import { useScroll, useTransform, motion, useAnimation, useMotionValueEvent } from 'framer-motion';
+import { usePathname } from 'next/navigation';
 import LangControl from './LangControl';
 
 const MotionFlex = motion(Flex);
@@ -15,6 +16,7 @@ const MotionImage = motion(Image);
 const MotionHeading = motion(Heading);
 
 const Header = ({ isAuth, errorAuth }: HeaderProps) => {
+  const path = usePathname();
   const { scrollY } = useScroll();
   const scrollYRange = [0, 100, 100];
 
@@ -24,7 +26,6 @@ const Header = ({ isAuth, errorAuth }: HeaderProps) => {
   const fontSize = useTransform(scrollY, scrollYRange, ['1.4rem', '1rem', '1rem']);
 
   const controls = useAnimation();
-
   useMotionValueEvent(scrollY, 'change', (val) =>
     val > 100 ? controls.start('small') : controls.start('full')
   );
@@ -75,13 +76,23 @@ const Header = ({ isAuth, errorAuth }: HeaderProps) => {
         </MotionLink>
         <Flex gap='4' alignItems={'center'}>
           <Link as={NextLink} href={PathPages.Home}>
-            <Button variant={'link'} fontSize={'16px'} fontWeight={'300'} color='link.100'>
+            <Button
+              variant={'link'}
+              fontSize={'16px'}
+              fontWeight={path === PathPages.Home ? '500' : '400'}
+              color='link.100'
+            >
               {NamePages.Home}
             </Button>
           </Link>
           {isAuth && (
             <Link as={NextLink} href={PathPages.Editor}>
-              <Button variant={'link'} fontSize={'16px'} fontWeight={'300'} color='link.100'>
+              <Button
+                variant={'link'}
+                fontSize={'16px'}
+                fontWeight={path === PathPages.Editor ? '500' : '400'}
+                color='link.100'
+              >
                 {NamePages.Editor}
               </Button>
             </Link>
