@@ -24,16 +24,20 @@ const AuthNavPanel = ({ isAuth, errorAuth }: AuthNavPanelProps) => {
   return (
     <Flex gap={'2'} alignItems={'center'}>
       {isAuth ? (
-        <Button colorScheme='base' onClick={logOutHandler}>
+        <Button colorScheme='base' onClick={logOutHandler} size={'sm'}>
           LogOut
         </Button>
       ) : (
         <>
           <Link as={NextLink} href={PathPages.Login}>
-            <Button variant={'outline'}>{NamePages.Login}</Button>
+            <Button variant={'outline'} size={'sm'}>
+              {NamePages.Login}
+            </Button>
           </Link>
           <Link as={NextLink} href={PathPages.SignUp}>
-            <Button colorScheme='base'>{NamePages.SignUp}</Button>
+            <Button colorScheme='base' size={'sm'}>
+              {NamePages.SignUp}
+            </Button>
           </Link>
         </>
       )}

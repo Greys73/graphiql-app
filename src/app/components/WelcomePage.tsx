@@ -1,10 +1,12 @@
 'use client';
-import { Container, Heading, Flex, useToast } from '@chakra-ui/react';
+import { Container, Heading, Flex, useToast, Text, OrderedList, ListItem, Divider } from '@chakra-ui/react';
 import AuthCard from '@src/components/AuthCard';
 import { MdOutlineLogin, MdAppRegistration, MdRebaseEdit } from 'react-icons/md';
 import { WelcomePageProps } from '@src/lib/types/types';
 import { NamePages, PathPages } from '@src/lib/constants/pages';
 import { showErrorToast } from '@src/utils/toasts';
+import { Image } from '@chakra-ui/next-js';
+import ImageGraphQL from '@src/assets/image/welcome_graphql.svg';
 
 export default function WelcomePage({ isAuth, errorAuth }: WelcomePageProps) {
   const toast = useToast();
@@ -42,7 +44,8 @@ This is a fantastic developer tool to help you form queries and explore your Sch
       <Heading as='h1' size='2xl' my={14} p={2} textAlign={'center'}>
         {isAuth ? 'Welcome, my friend!' : ' Welcome, are you new here?'}
       </Heading>
-      <Flex gap={6} justifyContent={'center'} flexWrap={'wrap'}>
+      <Image src={ImageGraphQL} alt='graphql abstract image' maxH={'200px'} w={'auto'}></Image>
+      <Flex gap={10} justifyContent={'center'} flexWrap={'wrap'} mt={8}>
         {isAuth ? (
           <AuthCard {...cardsProps.editor} />
         ) : (
@@ -51,6 +54,23 @@ This is a fantastic developer tool to help you form queries and explore your Sch
             <AuthCard {...cardsProps.login} />
           </>
         )}
+      </Flex>
+      <Heading as='h2' size='xl' mt={32} mb={10} p={2} textAlign={'center'}>
+        About GraphQL Playground
+      </Heading>
+      <Flex flexDirection={'column'} w={'100%'} mb={10}>
+        <Text fontSize='2xl'>Greetings in GraphQL Playground!</Text>
+        <Divider mb={2} />
+        <Text fontSize='xl'>Dive into your API exploration journey here.</Text>
+        <OrderedList pl={4} pb={4}>
+          <ListItem> Compose queries and mutations in the central panel in Request section.</ListItem>
+          <ListItem> Execute with the play button.</ListItem>
+          <ListItem> Get a response to a graphQL request in the Response section</ListItem>
+        </OrderedList>
+        <Text fontSize='xl' pb={4}>
+          For detailed schema info, check out the Docs tab.
+        </Text>
+        <Text fontSize='xl'>Happy querying!</Text>
       </Flex>
     </Container>
   );
