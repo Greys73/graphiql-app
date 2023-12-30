@@ -1,7 +1,7 @@
 'use client';
 import { Flex, Button, useToast } from '@chakra-ui/react';
 import AuthInput from '@src/components/AuthInput';
-import AuthInputPassword from '@src/components/AuthInputPassword';
+import { FaLock, FaUser } from 'react-icons/fa';
 import { getSignUpSchema } from '@src/lib/schema';
 import { signUp } from '@src/lib/actions';
 import { showErrorToast, showSuccessToast } from '@src/utils/toasts';
@@ -35,18 +35,23 @@ export default function SignUpForm() {
     <Flex minW='280px' w={'40%'} direction='column'>
       <Flex as='form' direction='column' onSubmit={handleSubmit(onSubmit)}>
         <AuthInput
+          icon={FaUser}
           name='Email'
           type='email'
           invalidMessage={errors.email?.message}
           register={register('email')}
         />
-        <AuthInputPassword
+        <AuthInput
+          icon={FaLock}
           name='Password'
+          type='password'
           invalidMessage={errors.password?.message}
           register={register('password')}
         />
-        <AuthInputPassword
+        <AuthInput
+          icon={FaLock}
           name='Password Confirm'
+          type='password'
           invalidMessage={errors.passwordConfirm?.message}
           register={register('passwordConfirm')}
         />
