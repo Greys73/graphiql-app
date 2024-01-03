@@ -1,8 +1,10 @@
 import { PreloadedState, combineReducers, configureStore } from '@reduxjs/toolkit';
 import documentationReducer from './reducers/DocumentationSlice';
+import APISlice from './reducers/APISlice';
 
 export const rootReducer = combineReducers({
   documentationReducer: documentationReducer,
+  APIReducer: APISlice,
 });
 
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
