@@ -2,6 +2,7 @@
 import { Heading, Flex, Container, Button, Highlight, Link } from '@chakra-ui/react';
 import { Image } from '@chakra-ui/next-js';
 import NextLink from 'next/link';
+import NextImage from 'next/image';
 import Logo from '@src/assets/image/logo.svg';
 import AuthNavPanel from './AuthNavPanel';
 import { NamePages, PathPages } from '@src/lib/constants/pages';
@@ -60,7 +61,13 @@ const Header = ({ isAuth, errorAuth }: HeaderProps) => {
             gap: gapLogo,
           }}
         >
-          <MotionImage src={Logo} boxSize={'40px'} style={{ height: imageSize }} alt='GraphQL' />
+          <MotionImage
+            as={NextImage}
+            src={Logo}
+            boxSize={'40px'}
+            style={{ height: imageSize }}
+            alt='GraphQL'
+          />
           <MotionHeading
             as='h1'
             size='md'
