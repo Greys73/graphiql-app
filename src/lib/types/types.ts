@@ -1,4 +1,4 @@
-import { MutableRefObject, ReactNode, SetStateAction } from 'react';
+import { MutableRefObject, ReactNode, SetStateAction, Dispatch } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import { type IconType } from 'react-icons';
 import { AuthError, Session } from '@supabase/supabase-js';
@@ -10,6 +10,7 @@ export interface AuthInputType {
   invalidMessage?: string;
   type: 'password' | 'email' | 'text';
   icon: IconType;
+  lang?: Languages;
 }
 
 export interface SubmitAuth {
@@ -60,3 +61,47 @@ export type TBoxCode = {
   options: TArea;
   children?: ReactNode;
 };
+
+export type Languages = 'en' | 'ru';
+
+type HomeCard = {
+  title: string;
+  text: string;
+  button: string;
+};
+
+type HomeAbout = {
+  title: string;
+  subtitle: string;
+  listTitle: string;
+  listItem: string[];
+  additionalText: string;
+  conclusion: string;
+};
+
+type LanguageTexts = {
+  header: Record<string, string>;
+  home: {
+    title: string[];
+    cards: Record<string, HomeCard>;
+    about: HomeAbout;
+  };
+  signup: Record<string, string>;
+  login: Record<string, string>;
+  logout: string;
+  footer: {
+    developers: string;
+  };
+};
+
+export type LanguageItem = {
+  name: Languages;
+  label: 'English' | 'Russian';
+  texts: LanguageTexts;
+};
+
+export type LanguagesType = Record<Languages, LanguageItem>;
+export interface LangContextType {
+  lang: LanguageItem;
+  setLang: Dispatch<SetStateAction<LanguageItem>> | null;
+}

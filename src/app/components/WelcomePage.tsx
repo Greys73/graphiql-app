@@ -3,38 +3,43 @@ import { Container, Heading, Flex, useToast, Text, OrderedList, ListItem, Divide
 import AuthCard from '@src/components/AuthCard';
 import { MdOutlineLogin, MdAppRegistration, MdRebaseEdit } from 'react-icons/md';
 import { WelcomePageProps } from '@src/lib/types/types';
-import { NamePages, PathPages } from '@src/lib/constants/pages';
+import { PathPages } from '@src/lib/constants/pages';
 import { showErrorToast } from '@src/utils/toasts';
 import { Image } from '@chakra-ui/next-js';
 import ImageGraphQL from '@src/assets/image/welcome_graphql.svg';
+import { useContext } from 'react';
+import LangContext from '@src/lib/LangContext';
 
 export default function WelcomePage({ isAuth, errorAuth }: WelcomePageProps) {
   const toast = useToast();
   if (errorAuth) showErrorToast(toast, errorAuth.message);
 
+  const {
+    lang: {
+      texts: { home },
+    },
+  } = useContext(LangContext);
+
   const cardsProps = {
     editor: {
-      buttonText: NamePages.Editor,
+      buttonText: home.cards.editor.button,
       buttonPath: PathPages.Editor,
-      text: `Our team has implemented a full-fledged GraphQL IDE!
-This is a fantastic developer tool to help you form queries and explore your Schema. Go to our online editor page, try, explore and implement your goals with us!`,
-      heading: 'Editor',
+      text: home.cards.editor.text,
+      heading: home.cards.editor.title,
       icon: MdRebaseEdit,
     },
     signUp: {
-      buttonText: NamePages.SignUp,
+      buttonText: home.cards.signup.button,
       buttonPath: PathPages.SignUp,
-      text: `If you want to start using our application, then you need to register. We don’t feel sorry for it, it’s just what the customer demands. Don't worry, it won't take much time :)`,
-      heading: 'Yeap',
+      text: home.cards.signup.text,
+      heading: home.cards.signup.title,
       icon: MdAppRegistration,
     },
     login: {
-      buttonText: NamePages.Login,
+      buttonText: home.cards.login.button,
       buttonPath: PathPages.Login,
-      text: `Haven't seen you for a long time, go to the login page, I hope you haven't forgotten your
-              account information? Otherwise, you will have to re-register, because... We did not implement
-              the forgot password function :(`,
-      heading: 'Nope',
+      text: home.cards.login.text,
+      heading: home.cards.login.title,
       icon: MdOutlineLogin,
     },
   };
@@ -42,9 +47,15 @@ This is a fantastic developer tool to help you form queries and explore your Sch
   return (
     <Container maxW='1080px' centerContent>
       <Heading as='h1' size='2xl' my={14} p={2} textAlign={'center'}>
-        {isAuth ? 'Welcome, my friend!' : ' Welcome, are you new here?'}
+        {isAuth ? home.title[0] : home.title[1]}
       </Heading>
-      <Image src={ImageGraphQL} alt='graphql abstract image' maxH={'200px'} w={'auto'}></Image>
+      <Image
+        src={ImageGraphQL}
+        alt='graphql abstract image'
+        maxH={'200px'}
+        w={'auto'}
+        priority={true}
+      ></Image>
       <Flex gap={10} justifyContent={'center'} flexWrap={'wrap'} mt={8}>
         {isAuth ? (
           <AuthCard {...cardsProps.editor} />
@@ -56,21 +67,21 @@ This is a fantastic developer tool to help you form queries and explore your Sch
         )}
       </Flex>
       <Heading as='h2' size='xl' mt={32} mb={10} p={2} textAlign={'center'}>
-        About GraphQL Playground
+        {home.about.title}
       </Heading>
       <Flex flexDirection={'column'} w={'100%'} mb={10}>
-        <Text fontSize='2xl'>Greetings in GraphQL Playground!</Text>
+        <Text fontSize='2xl'> {home.about.subtitle}</Text>
         <Divider mb={2} />
-        <Text fontSize='xl'>Dive into your API exploration journey here.</Text>
+        <Text fontSize='xl'>{home.about.listTitle}</Text>
         <OrderedList pl={4} pb={4}>
-          <ListItem> Compose queries and mutations in the central panel in Request section.</ListItem>
-          <ListItem> Execute with the play button.</ListItem>
-          <ListItem> Get a response to a graphQL request in the Response section</ListItem>
+          {home.about.listItem.map((item) => (
+            <ListItem key={item}> {item} </ListItem>
+          ))}
         </OrderedList>
         <Text fontSize='xl' pb={4}>
-          For detailed schema info, check out the Docs tab.
+          {home.about.additionalText}
         </Text>
-        <Text fontSize='xl'>Happy querying!</Text>
+        <Text fontSize='xl'> {home.about.conclusion}</Text>
       </Flex>
     </Container>
   );
