@@ -46,8 +46,7 @@ export type TEntity = {
 };
 
 export type TArea = {
-  value: string;
-  setValue: React.Dispatch<SetStateAction<string>>;
+  initialState: string;
   ref: MutableRefObject<ReactCodeMirrorRef>;
   format?: Function;
   readOnly?: ReactCodeMirrorProps['readOnly'];
@@ -60,6 +59,11 @@ export type TBoxCode = {
   name: string;
   options: TArea;
   children?: ReactNode;
+};
+export type TQuery = {
+  query: string;
+  variables?: string | null;
+  headers?: string | null;
 };
 
 export type Languages = 'en' | 'ru';
