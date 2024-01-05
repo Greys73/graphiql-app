@@ -115,8 +115,8 @@ export default function Editor({ errorAuth }: EditorPageProps) {
       <Heading as='h1' size='xl' p={2} noOfLines={1}>
         {NamePages.Editor}
       </Heading>
-      <Flex w='100%'>
-        <Box w='50%'>
+      <Flex w='100%' gap='0.5rem' flexDirection={{ base: 'column', sm: 'column', md: 'row', lg: 'row' }}>
+        <Box w={{ lg: '50%', md: '75%', sm: '100%' }}>
           <InputEndpoint value={DefaultAPI} />
         </Box>
         <Spacer />
