@@ -62,7 +62,7 @@ const Footer = () => {
           alignItems={'center'}
           target='blank'
         >
-          <Image as={NextImage} src={Logo} boxSize={'80px'} alt='RSSchool' />
+          <Image as={NextImage} src={Logo} width={80} height={25} alt='RSSchool' />
         </Link>
       </Container>
     </Flex>

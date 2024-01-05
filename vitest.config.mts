@@ -39,12 +39,12 @@ export default defineConfig({
     //   '.*\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
     //     './src/mocks/fileMock.js',
     // },
-    alias: [
-      {
-        find: /^(.*)\.svg$/,
-        replacement: path.resolve('./src/mocks/fileMock.js'),
-      },
-    ],
+    // alias: [
+    //   {
+    //     find: /^(.*)\.svg$/,
+    //     replacement: path.resolve('./src/mocks/fileMock.js'),
+    //   },
+    // ],
     coverage: {
       provider: 'v8',
     },
