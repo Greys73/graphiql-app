@@ -28,7 +28,6 @@ const CodeArea = ({ options }: { options: TArea }) => {
   }, []);
 
   const cmProps: ReactCodeMirrorProps = {
-    height: '100%',
     value: value,
     readOnly: readOnly,
     onKeyDown: onKeyDown,
