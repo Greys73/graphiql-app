@@ -93,6 +93,8 @@ type LanguageTexts = {
   signup: Record<string, string>;
   login: Record<string, string>;
   logout: string;
+  editor: Record<string, string>;
+  docs: Record<string, string>;
   footer: {
     developers: string;
   };

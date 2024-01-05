@@ -120,6 +120,44 @@ const loginRU = {
   github: 'Вход через GitHub',
 };
 
+const editorEN = {
+  title: NamePages.Editor,
+  change: 'Change',
+  request: 'Request',
+  response: 'Response',
+  variables: 'Variables',
+  headers: 'Headers',
+};
+
+const editorRU = {
+  title: 'Редактор',
+  change: 'Изменить',
+  request: 'Запрос',
+  response: 'Ответ',
+  variables: 'Переменные',
+  headers: 'Заголовки',
+};
+
+const docsEN = {
+  docs: 'Docs',
+  title: 'Documentation',
+  back: 'Back',
+  fields: 'Fields',
+  args: 'Arguments',
+  rootTypes: 'Root Types',
+  allTypes: 'All Schema Types',
+};
+
+const docsRU = {
+  docs: 'Документация',
+  title: 'Документация',
+  back: 'Назад',
+  fields: 'Поля ',
+  args: 'Аргументы',
+  rootTypes: 'Корневые Типы',
+  allTypes: 'Все типы схемы',
+};
+
 export const Languages: LanguagesType = {
   en: {
     name: 'en',
@@ -130,6 +168,8 @@ export const Languages: LanguagesType = {
       signup: signupEN,
       login: loginEN,
       logout: 'You have successfully logged out of your profile',
+      editor: editorEN,
+      docs: docsEN,
       footer: {
         developers: 'Developers',
       },
@@ -144,6 +184,8 @@ export const Languages: LanguagesType = {
       signup: signupRU,
       login: loginRU,
       logout: 'Выход из профиля выполнен успешно',
+      editor: editorRU,
+      docs: docsRU,
       footer: {
         developers: 'Разработчики',
       },
