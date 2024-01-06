@@ -18,6 +18,7 @@ function ButtonPlay({ isError, onClick }: TProps) {
       onClick={onClick}
       position='relative'
       top='2rem'
+      right={{ base: '-4rem', md: '0rem' }}
       zIndex='2'
     />
   );
