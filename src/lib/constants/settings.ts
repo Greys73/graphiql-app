@@ -170,6 +170,7 @@ export const Languages: LanguagesType = {
       logout: 'You have successfully logged out of your profile',
       editor: editorEN,
       docs: docsEN,
+      welcomeMessage: 'Welcome, nice to see you again!',
       footer: {
         developers: 'Developers',
       },
@@ -186,6 +187,7 @@ export const Languages: LanguagesType = {
       logout: 'Выход из профиля выполнен успешно',
       editor: editorRU,
       docs: docsRU,
+      welcomeMessage: 'Привет, рады видеть тебя снова!',
       footer: {
         developers: 'Разработчики',
       },

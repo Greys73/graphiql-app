@@ -95,6 +95,7 @@ type LanguageTexts = {
   logout: string;
   editor: Record<string, string>;
   docs: Record<string, string>;
+  welcomeMessage: string;
   footer: {
     developers: string;
   };
