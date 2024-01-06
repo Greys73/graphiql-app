@@ -12,7 +12,7 @@ function SectionCode({ areas }: { areas: TAreas }) {
     },
   } = useContext(LangContext);
   return (
-    <Flex w='100%'>
+    <Flex w='100%' flexDirection={{ base: 'column', md: 'row' }} gap={{ base: '1em', md: '0.1em' }}>
       <BoxCode name={editor.request} options={areas.editor}>
         <BoxAdvanced areas={areas} />
       </BoxCode>
