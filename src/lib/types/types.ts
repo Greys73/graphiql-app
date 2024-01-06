@@ -96,6 +96,7 @@ type LanguageTexts = {
   editor: Record<string, string>;
   docs: Record<string, string>;
   welcomeMessage: string;
+  welcomeErrorMessage: string;
   footer: {
     developers: string;
   };

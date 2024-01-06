@@ -16,7 +16,7 @@ export default function LoginForm() {
   const {
     lang: {
       name,
-      texts: { login, welcomeMessage },
+      texts: { login, welcomeMessage, welcomeErrorMessage },
     },
   } = useContext(LangContext);
 
@@ -42,7 +42,7 @@ export default function LoginForm() {
     const result = await signIn(values);
     const { error } = JSON.parse(result);
     error?.message
-      ? showErrorToast(toast, `Login failed: ${error?.message}`)
+      ? showErrorToast(toast, `${welcomeErrorMessage}: ${error?.message}`)
       : showSuccessToast(toast, welcomeMessage);
   }
 

@@ -171,6 +171,7 @@ export const Languages: LanguagesType = {
       editor: editorEN,
       docs: docsEN,
       welcomeMessage: 'Welcome, nice to see you again!',
+      welcomeErrorMessage: 'Login failed',
       footer: {
         developers: 'Developers',
       },
@@ -188,6 +189,7 @@ export const Languages: LanguagesType = {
       editor: editorRU,
       docs: docsRU,
       welcomeMessage: 'Привет, рады видеть тебя снова!',
+      welcomeErrorMessage: 'Ошибка входа',
       footer: {
         developers: 'Разработчики',
       },
