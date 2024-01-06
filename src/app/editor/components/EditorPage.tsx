@@ -14,8 +14,10 @@ import { showErrorToast } from '@src/utils/toasts';
 import InputEndpoint from './InputEndpoint';
 import ButtonDoc from './ButtonDoc';
 import SectionCode from './SectionCode';
-import { useAppDispatch, useAppSelector } from '@src/lib/hooks/redux';
-import { setSchema as SetSchemaInStore } from '@src/store/reducers/DocumentationSlice';
+import ButtonPlay from './ButtonPlay';
+import ButtonFormat from './ButtonFormat';
+import { useAppDispatch, useAppSelector } from '../../../lib/hooks/redux';
+import { setSchema as SetSchemaInStore } from '../../../store/reducers/DocumentationSlice';
 import {
   DefaultAPI,
   DefaultGraphQL,
@@ -23,7 +25,6 @@ import {
   DefaultVariables,
   DefaultViewer,
 } from '@src/lib/constants/editor';
-import ButtonPlay from './ButtonPlay';
 import LangContext from '@src/lib/LangContext';
 
 const DocumentationExplorer = lazy(() =>
@@ -117,6 +118,14 @@ export default function Editor({ errorAuth }: EditorPageProps) {
     }
   };
 
+  const onClickFormat: MouseEventHandler<HTMLButtonElement> = () => {
+    const event = new KeyboardEvent('keydown', { ctrlKey: true, code: 'KeyS', bubbles: true });
+    Object.values(areas).forEach((area) => {
+      const dom = area.ref.current.editor;
+      if (dom) dom.dispatchEvent(event);
+    });
+  };
+
   return (
     <Container maxW='1080px' centerContent>
       <Heading as='h1' size='xl' p={2} noOfLines={1}>
@@ -135,6 +144,7 @@ export default function Editor({ errorAuth }: EditorPageProps) {
           </ButtonDoc>
         )}
       </Flex>
+      <ButtonFormat isError={false} onClick={onClickFormat} />
       <ButtonPlay isError={false} onClick={onClickPlay} />
       <SectionCode areas={areas} />
     </Container>
