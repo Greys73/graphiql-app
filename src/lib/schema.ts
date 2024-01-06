@@ -1,36 +1,40 @@
+import { localizedMessage } from '@src/utils/utils';
 import * as yup from 'yup';
 
 const STRONG_EMAIL_REGEXP =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-const baseSchema = {
-  email: yup
-    .string()
-    .required('Email address is required')
-    .email('Invalid email address')
-    .matches(STRONG_EMAIL_REGEXP, 'Invalid email address'),
+export const getLoginSchema = (lang = 'en') => {
+  const loginSchema = {
+    email: yup
+      .string()
+      .required(localizedMessage('reqEmail', lang))
+      .email(localizedMessage('invalEmail', lang))
+      .matches(STRONG_EMAIL_REGEXP, localizedMessage('invalEmail', lang)),
+    password: yup.string().required(localizedMessage('reqPass', lang)),
+  };
+  return yup.object().shape(loginSchema);
 };
 
-const signUpSchema = {
-  ...baseSchema,
-  password: yup
-    .string()
-    .required('Password is required')
-    .min(8, 'Password must contain at least 8 characters')
-    .matches(/\p{General_Category=Number}/u, 'Password must contain at least one number')
-    .matches(/[\p{General_Category=Punctuation}\p{Symbol}]/u, 'Password must contain a special symbol')
-    .matches(/\p{General_Category=Letter}/u, 'Password must contain at least one letter'),
-  passwordConfirm: yup
-    .string()
-    .required('Password Confirm is required')
-    .oneOf([yup.ref('password')], 'Passwords must match'),
+export const getSignUpSchema = (lang = 'en') => {
+  const signUpSchema = {
+    email: yup
+      .string()
+      .required(localizedMessage('reqEmail', lang))
+      .email(localizedMessage('invalEmail', lang))
+      .matches(STRONG_EMAIL_REGEXP, localizedMessage('invalEmail', lang)),
+    password: yup
+      .string()
+      .required(localizedMessage('reqPass', lang))
+      .min(8, localizedMessage('symbPass', lang))
+      .matches(/\p{General_Category=Number}/u, localizedMessage('numPass', lang))
+      .matches(/[\p{General_Category=Punctuation}\p{Symbol}]/u, localizedMessage('specPass', lang))
+      .matches(/\p{General_Category=Letter}/u, localizedMessage('letPass', lang)),
+    passwordConfirm: yup
+      .string()
+      .required(localizedMessage('reqPassConf', lang))
+      .oneOf([yup.ref('password')], localizedMessage('matchPass', lang)),
+  };
+
+  return yup.object().shape(signUpSchema);
 };
-
-const loginSchema = {
-  ...baseSchema,
-  password: yup.string().required('Password is required'),
-};
-
-export const getLoginSchema = () => yup.object().shape(loginSchema);
-
-export const getSignUpSchema = () => yup.object().shape(signUpSchema);

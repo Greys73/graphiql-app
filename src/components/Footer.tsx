@@ -1,10 +1,19 @@
 'use client';
 import { Text, Flex, Container, Link } from '@chakra-ui/react';
 import NextLink from 'next/link';
+import NextImage from 'next/image';
 import { Image } from '@chakra-ui/next-js';
 import Logo from '@src/assets/image/rs_logo.svg';
+import LangContext from '@src/lib/LangContext';
+import { useContext } from 'react';
 
 const Footer = () => {
+  const {
+    lang: {
+      texts: { footer },
+    },
+  } = useContext(LangContext);
+
   const developers = [
     {
       name: 'Greys73',
@@ -35,7 +44,7 @@ const Footer = () => {
         justifyItems={'center'}
       >
         <Flex flexDirection={'column'} fontSize={'14px'} lineHeight={'18px'}>
-          <Text color={'base.400'}>Developers:</Text>
+          <Text color={'base.400'}>{footer.developers}:</Text>
           <Flex alignItems={'center'} columnGap={2} flexWrap={'wrap'}>
             {developers.map((dev) => (
               <Link
@@ -61,7 +70,7 @@ const Footer = () => {
           alignItems={'center'}
           target='blank'
         >
-          <Image src={Logo} boxSize={'80px'} alt='RSSchool' />
+          <Image as={NextImage} src={Logo} width={80} height={25} alt='RSSchool' />
         </Link>
       </Container>
     </Flex>

@@ -9,12 +9,23 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { SubmitAuth } from '@src/lib/types/types';
 import AuthGitHubButton from '@components/AuthGitHubButton';
+import LangContext from '@src/lib/LangContext';
+import { useContext, useEffect, useState } from 'react';
 
 export default function SignUpForm() {
-  const schema = getSignUpSchema();
+  const {
+    lang: {
+      name,
+      texts: { signup },
+    },
+  } = useContext(LangContext);
+
+  const [schema, setSchema] = useState(getSignUpSchema(name));
+
   const toast = useToast();
 
   const {
+    clearErrors,
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
@@ -23,12 +34,17 @@ export default function SignUpForm() {
     resolver: yupResolver(schema),
   });
 
+  useEffect(() => {
+    setSchema(getSignUpSchema(name));
+    clearErrors();
+  }, [name, clearErrors]);
+
   async function onSubmit(values: SubmitAuth) {
     const result = await signUp(values);
     const { error } = JSON.parse(result);
     error?.message
-      ? showErrorToast(toast, `Registration failed: ${error?.message}`)
-      : showSuccessToast(toast, 'Thank You for Registration');
+      ? showErrorToast(toast, `${signup.error}: ${error?.message}`)
+      : showSuccessToast(toast, signup.success);
   }
 
   return (
@@ -36,30 +52,32 @@ export default function SignUpForm() {
       <Flex as='form' direction='column' onSubmit={handleSubmit(onSubmit)}>
         <AuthInput
           icon={FaUser}
-          name='Email'
+          name={signup.email}
           type='email'
           invalidMessage={errors.email?.message}
           register={register('email')}
         />
         <AuthInput
+          lang={name}
           icon={FaLock}
-          name='Password'
+          name={signup.password}
           type='password'
           invalidMessage={errors.password?.message}
           register={register('password')}
         />
         <AuthInput
+          lang={name}
           icon={FaLock}
-          name='Password Confirm'
+          name={signup.passwordConfirm}
           type='password'
           invalidMessage={errors.passwordConfirm?.message}
           register={register('passwordConfirm')}
         />
         <Button mt={4} colorScheme='base' isLoading={isSubmitting} type='submit'>
-          Sign Up
+          {signup.title}
         </Button>
       </Flex>
-      <AuthGitHubButton label='Sign Up with GitHub' />
+      <AuthGitHubButton label={signup.github} />
     </Flex>
   );
 }

@@ -1,13 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
-import { MouseEventHandler, useEffect, useRef, useState, lazy, Suspense } from 'react';
+import { MouseEventHandler, useEffect, useRef, useState, lazy, Suspense, useContext } from 'react';
 import { buildClientSchema, GraphQLSchema } from 'graphql';
 import { graphql, updateSchema } from 'cm6-graphql';
 import { EditorPageProps, TAreas } from '@src/lib/types/types';
 import { ReactCodeMirrorRef } from '@uiw/react-codemirror';
 import { json } from '@codemirror/lang-json';
 import { Box, Container, Flex, Heading, Spacer, Text, useToast } from '@chakra-ui/react';
-import { NamePages } from '@src/lib/constants/pages';
 import { getAPISchema, makeRequest } from '@src/lib/rootAPI';
 import graphqlFormat from '@src/utils/graphql/graphqlFormat';
 import { jsonFormat, setViewText } from '@src/utils/utils';
@@ -15,8 +14,8 @@ import { showErrorToast } from '@src/utils/toasts';
 import InputEndpoint from './InputEndpoint';
 import ButtonDoc from './ButtonDoc';
 import SectionCode from './SectionCode';
-import { useAppDispatch, useAppSelector } from '../../../lib/hooks/redux';
-import { setSchema as SetSchemaInStore } from '../../../store/reducers/DocumentationSlice';
+import { useAppDispatch, useAppSelector } from '@src/lib/hooks/redux';
+import { setSchema as SetSchemaInStore } from '@src/store/reducers/DocumentationSlice';
 import {
   DefaultAPI,
   DefaultGraphQL,
@@ -25,6 +24,7 @@ import {
   DefaultViewer,
 } from '@src/lib/constants/editor';
 import ButtonPlay from './ButtonPlay';
+import LangContext from '@src/lib/LangContext';
 
 const DocumentationExplorer = lazy(() =>
   import('@src/components/Documentation/DocumentationExplorer.tsx').then(({ DocumentationExplorer }) => ({
@@ -40,6 +40,13 @@ export default function Editor({ errorAuth }: EditorPageProps) {
   const [schema, setSchema] = useState<GraphQLSchema>();
   const [showDocumentation, setShowDocumentation] = useState(false);
 
+  const {
+    lang: {
+      name,
+      texts: { editor },
+    },
+  } = useContext(LangContext);
+
   const reloadAPI = () => {
     getAPISchema(URL).then(({ schemaResponse, error }) => {
       if (schemaResponse) {
@@ -47,7 +54,7 @@ export default function Editor({ errorAuth }: EditorPageProps) {
         const schema = buildClientSchema(schemaResponse);
         if (schema) {
           Object.values(areas).forEach((area) => {
-            const view = area.ref.current.view;
+            const view = area.ref.current?.view;
             if (view) updateSchema(view, schema);
           });
           setSchema(schema);
@@ -62,7 +69,7 @@ export default function Editor({ errorAuth }: EditorPageProps) {
 
   useEffect(() => {
     reloadAPI();
-  }, [URL]);
+  }, [URL, name]);
 
   const areas: TAreas = {
     editor: {
@@ -113,7 +120,7 @@ export default function Editor({ errorAuth }: EditorPageProps) {
   return (
     <Container maxW='1080px' centerContent>
       <Heading as='h1' size='xl' p={2} noOfLines={1}>
-        {NamePages.Editor}
+        {editor.title}
       </Heading>
       <Flex w='100%' gap='0.5rem' flexDirection={{ base: 'column', sm: 'column', md: 'row', lg: 'row' }}>
         <Box w={{ lg: '50%', md: '75%', sm: '100%' }}>

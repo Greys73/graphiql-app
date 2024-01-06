@@ -13,10 +13,11 @@ import {
   IntrospectionScalarType,
   IntrospectionSchema,
 } from 'graphql';
-import React, { ReactNode } from 'react';
-import { useAppDispatch, useAppSelector } from '../../lib/hooks/redux';
-import { popPath, pushPath } from '../../store/reducers/DocumentationSlice';
+import React, { ReactNode, useContext } from 'react';
+import { useAppDispatch, useAppSelector } from '@src/lib/hooks/redux';
+import { popPath, pushPath } from '@src/store/reducers/DocumentationSlice';
 import DocumentationRoot from './DocumentationRoot';
+import LangContext from '@src/lib/LangContext';
 
 const getType = (type: IntrospectionOutputTypeRef | IntrospectionInputTypeRef): string => {
   switch (type.kind) {
@@ -39,6 +40,12 @@ const getType = (type: IntrospectionOutputTypeRef | IntrospectionInputTypeRef): 
 export function DocumentationExplorer() {
   const dispatch = useAppDispatch();
   const { schema, paths } = useAppSelector((state) => state.documentationReducer);
+
+  const {
+    lang: {
+      texts: { docs },
+    },
+  } = useContext(LangContext);
 
   if (!schema) return null;
 
@@ -74,7 +81,7 @@ export function DocumentationExplorer() {
 
   return (
     <div>
-      {!!paths.length && <Button onClick={() => dispatch(popPath())}>&lt; Back</Button>}
+      {!!paths.length && <Button onClick={() => dispatch(popPath())}>&lt; {docs.back}</Button>}
 
       {content}
     </div>
@@ -110,7 +117,7 @@ function DocPrintEnum({ data }: { data: IntrospectionEnumType }) {
 
           {data.enumValues.map((item) => (
             <Box marginLeft={4} marginTop={1} key={item.name}>
-              <Text as='span' color={'blue'}>
+              <Text as='span' color={'orange'}>
                 {item.name}
               </Text>
               {item.description && <Text as='span'> - {item.description}</Text>}
@@ -146,12 +153,17 @@ function DocPrintObject({
 
 function DocPrintFields({ fields }: { fields: ReadonlyArray<IntrospectionField | IntrospectionInputValue> }) {
   const dispatch = useAppDispatch();
+  const {
+    lang: {
+      texts: { docs },
+    },
+  } = useContext(LangContext);
   if (!fields) return <Text>DocPrintFields Error - fields is null?</Text>;
 
   return (
     <>
       <Heading size='md' my={8}>
-        Fields:
+        {docs.fields}:
       </Heading>
 
       {fields.map((field) => (
@@ -161,7 +173,7 @@ function DocPrintFields({ fields }: { fields: ReadonlyArray<IntrospectionField |
               {field.name}
             </Link>
           ) : (
-            <Text>field.name</Text>
+            <Text as='span'>{field.name}</Text>
           )}
           :{' '}
           <Link
@@ -184,6 +196,11 @@ function DocPrintFieldDetailed({
   field: IntrospectionField;
   schema: IntrospectionSchema;
 }) {
+  const {
+    lang: {
+      texts: { docs },
+    },
+  } = useContext(LangContext);
   const { name, description, args, type } = field;
   const typeName = (type as IntrospectionNamedTypeRef).name;
 
@@ -202,7 +219,7 @@ function DocPrintFieldDetailed({
       {!!args.length && (
         <>
           <Heading size='md' my={8}>
-            Arguments:
+            {docs.args}:
           </Heading>
 
           {args.map((arg: IntrospectionInputValue) => (
@@ -229,5 +246,3 @@ function DocPrintArgument({ arg }: { arg: IntrospectionInputValue }) {
     </Box>
   );
 }
-
-//export default DocumentationExplorer as React.ComponentType<FC>;

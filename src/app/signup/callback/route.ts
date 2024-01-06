@@ -8,7 +8,7 @@ export async function GET(request: Request) {
   const isAuth = cookies().get('supabase-auth-token');
 
   if (isAuth) {
-    return NextResponse.redirect(`${requestUrl.origin}${PathPages.Editor}`);
+    return NextResponse.redirect(`${requestUrl.protocol}//${requestUrl.hostname}${PathPages.Editor}`);
   }
 
   const { searchParams } = new URL(request.url);
@@ -19,7 +19,7 @@ export async function GET(request: Request) {
 
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
-      return NextResponse.redirect(`${requestUrl.origin}${PathPages.Editor}`);
+      return NextResponse.redirect(`${requestUrl.protocol}//${requestUrl.hostname}${PathPages.Editor}`);
     }
   }
 
