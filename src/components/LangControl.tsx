@@ -15,12 +15,11 @@ const LangControl = () => {
       setLang(Languages[selectedLang]);
     }
   };
-
   return (
     <Select
+      value={lang.name}
       rounded={4}
       variant='unstyled'
-      defaultValue={lang.name}
       size={'sm'}
       onChange={handler}
       cursor={'pointer'}
