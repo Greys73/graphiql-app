@@ -49,7 +49,7 @@ export default function Editor({ errorAuth }: EditorPageProps) {
   } = useContext(LangContext);
 
   const reloadAPI = () => {
-    getAPISchema(URL).then(({ schemaResponse, error }) => {
+    getAPISchema(URL, name).then(({ schemaResponse, error }) => {
       if (schemaResponse) {
         dispatch(SetSchemaInStore(schemaResponse.__schema));
         const schema = buildClientSchema(schemaResponse);
@@ -105,7 +105,7 @@ export default function Editor({ errorAuth }: EditorPageProps) {
     const headers = areas.headers.ref.current.view?.state.doc.toString();
     const viewer = areas.viewer.ref.current.view;
     if (query) {
-      const { data, errors } = await makeRequest(URL, { query, variables, headers });
+      const { data, errors } = await makeRequest(URL, { query, variables, headers }, name);
       if (errors) {
         errors.forEach((error: Error) => {
           showErrorToast(toast, error.message);
