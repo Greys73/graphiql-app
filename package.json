@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "fix": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|jsx|tsx|css|json)\"",
+    "prettier-fix": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|jsx|tsx|css|json)\"",
     "test": "vitest --passWithNoTests --watch --config ./vitest.config.mts",
     "coverage": "vitest run --coverage.enabled",
     "prepare": "husky install"
