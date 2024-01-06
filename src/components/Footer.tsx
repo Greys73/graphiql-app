@@ -2,6 +2,7 @@
 import { Text, Flex, Container, Link } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { Image } from '@chakra-ui/next-js';
+import NextImage from 'next/image';
 import Logo from '@src/assets/image/rs_logo.svg';
 
 const Footer = () => {
@@ -61,7 +62,7 @@ const Footer = () => {
           alignItems={'center'}
           target='blank'
         >
-          <Image src={Logo} boxSize={'80px'} alt='RSSchool' />
+          <Image as={NextImage} src={Logo} boxSize={'80px'} alt='RSSchool' />
         </Link>
       </Container>
     </Flex>
