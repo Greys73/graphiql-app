@@ -1,16 +1,19 @@
 /// <reference types="vitest" />
 /// <reference types="vite/client" />
 
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), tsconfigPaths()],
   base: './',
   test: {
     globals: true,
     environment: 'jsdom',
     setupFiles: ['./__tests__/setupTests.ts'],
+    coverage: {
+      provider: 'v8',
+    },
   },
 });

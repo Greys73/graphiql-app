@@ -54,7 +54,7 @@ export default function Editor({ errorAuth }: EditorPageProps) {
         const schema = buildClientSchema(schemaResponse);
         if (schema) {
           Object.values(areas).forEach((area) => {
-            const view = area.ref.current.view;
+            const view = area.ref.current?.view;
             if (view) updateSchema(view, schema);
           });
           setSchema(schema);

@@ -117,7 +117,7 @@ function DocPrintEnum({ data }: { data: IntrospectionEnumType }) {
 
           {data.enumValues.map((item) => (
             <Box marginLeft={4} marginTop={1} key={item.name}>
-              <Text as='span' color={'blue'}>
+              <Text as='span' color={'orange'}>
                 {item.name}
               </Text>
               {item.description && <Text as='span'> - {item.description}</Text>}
@@ -173,7 +173,7 @@ function DocPrintFields({ fields }: { fields: ReadonlyArray<IntrospectionField |
               {field.name}
             </Link>
           ) : (
-            <Text>field.name</Text>
+            <Text as='span'>{field.name}</Text>
           )}
           :{' '}
           <Link

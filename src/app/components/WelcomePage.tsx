@@ -7,6 +7,7 @@ import { PathPages } from '@src/lib/constants/pages';
 import { showErrorToast } from '@src/utils/toasts';
 import { Image } from '@chakra-ui/next-js';
 import ImageGraphQL from '@src/assets/image/welcome_graphql.svg';
+import NextImage from 'next/image';
 import { useContext } from 'react';
 import LangContext from '@src/lib/LangContext';
 
@@ -50,6 +51,7 @@ export default function WelcomePage({ isAuth, errorAuth }: WelcomePageProps) {
         {isAuth ? home.title[0] : home.title[1]}
       </Heading>
       <Image
+        as={NextImage}
         src={ImageGraphQL}
         alt='graphql abstract image'
         maxH={'200px'}
