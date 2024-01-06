@@ -2,7 +2,6 @@ import { HttpResponse, http } from 'msw';
 import { DefaultAPI } from '../../lib/constants/editor';
 
 export const getIntrospectionSchemaHandler = http.post(DefaultAPI, () => {
-  console.log('------ trying to get mock for  IntrospectionSchema');
   return HttpResponse.json(mockIntrospectionSchemaData);
 });
 

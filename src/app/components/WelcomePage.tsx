@@ -7,6 +7,7 @@ import { NamePages, PathPages } from '@src/lib/constants/pages';
 import { showErrorToast } from '@src/utils/toasts';
 import { Image } from '@chakra-ui/next-js';
 import ImageGraphQL from '@src/assets/image/welcome_graphql.svg';
+import NextImage from 'next/image';
 
 export default function WelcomePage({ isAuth, errorAuth }: WelcomePageProps) {
   const toast = useToast();
@@ -44,7 +45,7 @@ This is a fantastic developer tool to help you form queries and explore your Sch
       <Heading as='h1' size='2xl' my={14} p={2} textAlign={'center'}>
         {isAuth ? 'Welcome, my friend!' : ' Welcome, are you new here?'}
       </Heading>
-      <Image src={ImageGraphQL} alt='graphql abstract image' maxH={'200px'} w={'auto'}></Image>
+      <Image as={NextImage} src={ImageGraphQL} alt='graphql abstract image' maxH={'200px'} w={'auto'}></Image>
       <Flex gap={10} justifyContent={'center'} flexWrap={'wrap'} mt={8}>
         {isAuth ? (
           <AuthCard {...cardsProps.editor} />

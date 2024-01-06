@@ -8,8 +8,6 @@ import ErrorBoundary from '../src/components/ErrorBoundary';
 import { setupStore } from '../src/store/store';
 
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
-  //  return <ChakraProvider>{children}</ChakraProvider>;
-
   return (
     <ErrorBoundary>
       <Provider store={setupStore()}>

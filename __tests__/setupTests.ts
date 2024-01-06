@@ -1,11 +1,7 @@
+import { server } from '@src/mocks/node';
 import '@testing-library/jest-dom/vitest';
 import { cleanup } from '@testing-library/react';
-import { afterAll, afterEach, beforeAll, vi } from 'vitest';
-import createFetchMock from 'vitest-fetch-mock';
-import { server } from '@src/mocks/node';
-
-// const fetchMocker = createFetchMock(vi);
-// fetchMocker.enableMocks();
+import { afterAll, afterEach, beforeAll } from 'vitest';
 
 beforeAll(() => server.listen());
 afterEach(() => {

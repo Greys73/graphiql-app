@@ -1,47 +1,16 @@
 import { DocumentationExplorer } from '@components/Documentation/DocumentationExplorer';
-import EditorPage from '@src/app/editor/components/EditorPage';
 import { DefaultAPI } from '@src/lib/constants/editor';
 import { getAPISchema } from '@src/lib/rootAPI';
 import { setSchema as SetSchemaInStore } from '@src/store/reducers/DocumentationSlice';
 import { setupStore } from '@src/store/store';
 import { Provider } from 'react-redux';
-import { describe, expect, test, vi } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { fireEvent, render, screen } from '../../test-utils';
-
-vi.mock('cm6-graphql', () => {
-  return {
-    graphql: () => ({
-      extension: [],
-    }),
-    updateSchema: () => {},
-  };
-});
-
-vi.mock('@codemirror/lang-json', () => {
-  return {
-    json: () => ({
-      extension: [],
-    }),
-  };
-});
 
 describe('DocumentationExplorer tests', () => {
   test('DocumentationExplorer should work well', async () => {
-    //---------- 1 way
-
-    // render(<EditorPage errorAuth={null} />);
-
-    // const docsbtn = await screen.findByRole('button', { name: 'Docs' });
-    // expect(docsbtn).toBeInTheDocument();
-
-    // fireEvent.click(docsbtn);
-
-    //---------- 2 way
-
     const store = setupStore();
     const { schemaResponse } = await getAPISchema(DefaultAPI);
-    // console.log('---------------------------------------------------------------');
-    // console.log(schemaResponse, error);
     store.dispatch(SetSchemaInStore(schemaResponse?.__schema));
 
     render(
@@ -50,7 +19,6 @@ describe('DocumentationExplorer tests', () => {
       </Provider>
     );
 
-    // ------------ common
     // root page
     expect(await screen.findByRole('heading', { name: 'Root Types:' }));
     expect(screen.getByRole('heading', { name: 'All Schema Types:' }));
