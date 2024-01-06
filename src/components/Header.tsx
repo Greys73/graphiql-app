@@ -5,11 +5,13 @@ import NextLink from 'next/link';
 import NextImage from 'next/image';
 import Logo from '@src/assets/image/logo.svg';
 import AuthNavPanel from './AuthNavPanel';
-import { NamePages, PathPages } from '@src/lib/constants/pages';
+import { PathPages } from '@src/lib/constants/pages';
 import { HeaderProps } from '@src/lib/types/types';
 import { useScroll, useTransform, motion, useAnimation, useMotionValueEvent } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import LangControl from './LangControl';
+import { useContext } from 'react';
+import LangContext from '@src/lib/LangContext';
 
 const MotionFlex = motion(Flex);
 const MotionLink = motion(Link);
@@ -31,6 +33,12 @@ const Header = ({ isAuth, errorAuth }: HeaderProps) => {
     val > 100 ? controls.start('small') : controls.start('full')
   );
 
+  const {
+    lang: {
+      texts: { header },
+    },
+  } = useContext(LangContext);
+
   return (
     <MotionFlex
       as='header'
@@ -44,7 +52,7 @@ const Header = ({ isAuth, errorAuth }: HeaderProps) => {
       animate={controls}
       variants={{
         full: { filter: 'drop-shadow(#fff 1px 2px 2px)' },
-        small: { filter: 'drop-shadow(rgba(204, 204, 204, 0.4) 1px 2px 2px)' },
+        small: { filter: 'drop-shadow(#cccccc66 1px 2px 2px)' },
       }}
       style={{
         height: containerHeight,
@@ -89,7 +97,7 @@ const Header = ({ isAuth, errorAuth }: HeaderProps) => {
               fontWeight={path === PathPages.Home ? '500' : '400'}
               color='link.100'
             >
-              {NamePages.Home}
+              {header.home}
             </Button>
           </Link>
           {isAuth && (
@@ -100,7 +108,7 @@ const Header = ({ isAuth, errorAuth }: HeaderProps) => {
                 fontWeight={path === PathPages.Editor ? '500' : '400'}
                 color='link.100'
               >
-                {NamePages.Editor}
+                {header.playground}
               </Button>
             </Link>
           )}

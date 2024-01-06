@@ -2,18 +2,26 @@
 
 import { Box, Heading, Link } from '@chakra-ui/react';
 import { IntrospectionSchema } from 'graphql';
-import { useAppDispatch } from '../../lib/hooks/redux';
-import { pushPath } from '../../store/reducers/DocumentationSlice';
+import { useAppDispatch } from '@src/lib/hooks/redux';
+import { pushPath } from '@src/store/reducers/DocumentationSlice';
+import { useContext } from 'react';
+import LangContext from '@src/lib/LangContext';
 
 export default function DocumentationRoot({ schema }: { schema: IntrospectionSchema }) {
   const dispatch = useAppDispatch();
+
+  const {
+    lang: {
+      texts: { docs },
+    },
+  } = useContext(LangContext);
 
   const submitPath = (path: string) => dispatch(pushPath(path));
 
   return (
     <>
       <Heading size='md' my={8}>
-        Root Types:
+        {docs.rootTypes}:
       </Heading>
 
       {schema.queryType && (
@@ -33,7 +41,7 @@ export default function DocumentationRoot({ schema }: { schema: IntrospectionSch
       )}
 
       <Heading size='md' my={8}>
-        All Schema Types:
+        {docs.allTypes}:
       </Heading>
 
       {schema.types

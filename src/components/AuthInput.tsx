@@ -14,9 +14,12 @@ import { AuthInputType } from '@src/lib/types/types';
 import { toOneWord } from '@src/utils/utils';
 import { useState } from 'react';
 
-const AuthInput = ({ name, invalidMessage, register, type, icon }: AuthInputType) => {
+const AuthInput = ({ name, invalidMessage, register, type, icon, lang = 'en' }: AuthInputType) => {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
+
+  const showText = lang === 'en' ? 'Show' : 'Показать';
+  const hideText = lang === 'en' ? 'Hide' : 'Скрыть';
 
   const IconLeft = chakra(icon);
 
@@ -39,9 +42,9 @@ const AuthInput = ({ name, invalidMessage, register, type, icon }: AuthInputType
           {...(register ? register : {})}
         />
         {type === 'password' && (
-          <InputRightElement w='4.7em'>
+          <InputRightElement minW='4.7em' mr={'0.5em'}>
             <Button h='1.7em' size='sm' onClick={handleClick}>
-              {show ? 'Hide' : 'Show'}
+              {show ? hideText : showText}
             </Button>
           </InputRightElement>
         )}
