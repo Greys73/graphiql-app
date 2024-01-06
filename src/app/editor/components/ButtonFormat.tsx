@@ -1,7 +1,8 @@
+import { MouseEventHandler, useContext } from 'react';
+import LangContext from '@src/lib/LangContext';
 import { IconButton } from '@chakra-ui/react';
 import { Tooltip } from '@chakra-ui/react';
 import { EditIcon } from '@chakra-ui/icons';
-import { MouseEventHandler } from 'react';
 
 type TProps = {
   isError: boolean;
@@ -9,8 +10,14 @@ type TProps = {
 };
 
 function ButtonFormat({ isError, onClick }: TProps) {
+  const {
+    lang: {
+      texts: { editor },
+    },
+  } = useContext(LangContext);
+
   return (
-    <Tooltip label='Format query (Ctrl+S)'>
+    <Tooltip label={editor.format}>
       <IconButton
         isDisabled={isError}
         colorScheme='base'
@@ -19,8 +26,8 @@ function ButtonFormat({ isError, onClick }: TProps) {
         icon={<EditIcon />}
         onClick={onClick}
         position='relative'
-        top={{ base: '4.5rem', md: '8rem' }}
-        right={{ base: '-8rem', md: '0rem' }}
+        top={{ base: '4.5rem', md: '7.5rem' }}
+        right={{ base: '-7rem', md: '0rem' }}
         zIndex='2'
       />
     </Tooltip>
