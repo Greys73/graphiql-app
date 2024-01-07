@@ -23,6 +23,7 @@ const LangControl = () => {
       size={'sm'}
       onChange={handler}
       cursor={'pointer'}
+      maxW={'200px'}
     >
       <option value={en.name}>{en.label}</option>
       <option value={ru.name}>{ru.label}</option>

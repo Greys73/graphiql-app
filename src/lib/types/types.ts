@@ -34,7 +34,10 @@ export interface CheckAuthProps {
 
 export interface WelcomePageProps extends CheckAuthProps {}
 export interface HeaderProps extends CheckAuthProps {}
-export interface AuthNavPanelProps extends CheckAuthProps {}
+export interface AuthNavPanelProps extends CheckAuthProps {
+  mobile?: boolean;
+  closeBurger?: () => void;
+}
 
 export interface EditorPageProps {
   errorAuth: AuthError | null;
