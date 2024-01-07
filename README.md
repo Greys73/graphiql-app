@@ -16,10 +16,13 @@ This Application is a playground/IDE for graphQL requests. It's a final task of 
 
 Application is created with:
 
-- React;
-- Redux;
+- Next.js / APP Router;
+- Redux Toolkit;
 - TypeScript;
-- Vite;
+- Supabase;
+- Chakra UI;
+- CodeMirror;
+- Vitest;
 
 ## Install
 
@@ -35,12 +38,14 @@ $ npm run dev
 
 In the project directory, you can run scripts:
 
-- `npm run dev` - starts the development server using Vite
-- `npm run build` - builds the project using Vite in production mode
+- `npm run dev` - starts Next.js in development mode
+- `npm run build` - builds the project in production mode
+- `npm run start` - starts a Next.js production server
 - `npm run lint` - lints the project files using ESLint
-- `npm run fix` - formats the project files using Prettier
+- `npm run prettier-fix` - formats the project files using Prettier
 - `npm run prepare` - installs and configures Husky in project
 - `npm run test` - runs the Vites tests
+- `npm run coverage` - runs the tests and show coverage
 
 ## Team
 
