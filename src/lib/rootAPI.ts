@@ -1,9 +1,9 @@
 import { getIntrospectionQuery, IntrospectionQuery } from 'graphql';
 import { gql, request } from 'graphql-request';
-import { ERROR } from './constants/error';
 import { TQuery } from './types/types';
+import { localizedMessage, minimizeMessage } from '@src/utils/utils';
 
-export const getAPISchema = async (url: string) => {
+export const getAPISchema = async (url: string, lang = 'en') => {
   try {
     const schemaResponse = await request<IntrospectionQuery>(
       url,
@@ -13,11 +13,12 @@ export const getAPISchema = async (url: string) => {
     );
     return { schemaResponse, error: null };
   } catch (error) {
-    return { schema: null, error: `${ERROR.API_GET_SCHEMA}: ${(error as Error).message}` };
+    const message = (error as Error).message;
+    return { schema: null, error: `${localizedMessage('apiError', lang)}: ${minimizeMessage(message)}` };
   }
 };
 
-export const makeRequest = async (url: string, { query, variables, headers }: TQuery) => {
+export const makeRequest = async (url: string, { query, variables, headers }: TQuery, lang = 'en') => {
   try {
     const response = await fetch(url, {
       method: 'POST',
@@ -26,6 +27,10 @@ export const makeRequest = async (url: string, { query, variables, headers }: TQ
     });
     return await response.json();
   } catch (error) {
-    return { data: null, errors: [{ message: `${(error as Error).message}. ${ERROR.INVALID_URL}` }] };
+    const message = (error as Error).message;
+    return {
+      data: null,
+      errors: [{ message: `${localizedMessage('requestError', lang)}: ${minimizeMessage(message)}` }],
+    };
   }
 };

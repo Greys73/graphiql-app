@@ -17,4 +17,4 @@ export const DefaultViewer = '';
 
 export const DefaultVariables = '{ "name": "Rick" }';
 
-export const DefaultHeaders = '{ "Content-Length": "1000" }';
+export const DefaultHeaders = '{ "Cache-Control": "max-age=20" }';
