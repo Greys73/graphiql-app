@@ -127,6 +127,7 @@ const editorEN = {
   response: 'Response',
   variables: 'Variables',
   headers: 'Headers',
+  format: 'Format request text (Ctrl+S)',
 };
 
 const editorRU = {
@@ -136,10 +137,11 @@ const editorRU = {
   response: 'Ответ',
   variables: 'Переменные',
   headers: 'Заголовки',
+  format: 'Форматировать текст (Ctrl+S)',
 };
 
 const docsEN = {
-  docs: 'Docs',
+  docs: 'Documentation',
   title: 'Documentation',
   back: 'Back',
   fields: 'Fields',

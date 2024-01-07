@@ -14,8 +14,10 @@ import { showErrorToast } from '@src/utils/toasts';
 import InputEndpoint from './InputEndpoint';
 import ButtonDoc from './ButtonDoc';
 import SectionCode from './SectionCode';
-import { useAppDispatch, useAppSelector } from '@src/lib/hooks/redux';
-import { setSchema as SetSchemaInStore } from '@src/store/reducers/DocumentationSlice';
+import ButtonPlay from './ButtonPlay';
+import ButtonFormat from './ButtonFormat';
+import { useAppDispatch, useAppSelector } from '../../../lib/hooks/redux';
+import { setSchema as SetSchemaInStore } from '../../../store/reducers/DocumentationSlice';
 import {
   DefaultAPI,
   DefaultGraphQL,
@@ -23,7 +25,6 @@ import {
   DefaultVariables,
   DefaultViewer,
 } from '@src/lib/constants/editor';
-import ButtonPlay from './ButtonPlay';
 import LangContext from '@src/lib/LangContext';
 
 const DocumentationExplorer = lazy(() =>
@@ -48,7 +49,7 @@ export default function Editor({ errorAuth }: EditorPageProps) {
   } = useContext(LangContext);
 
   const reloadAPI = () => {
-    getAPISchema(URL).then(({ schemaResponse, error }) => {
+    getAPISchema(URL, name).then(({ schemaResponse, error }) => {
       if (schemaResponse) {
         dispatch(SetSchemaInStore(schemaResponse.__schema));
         const schema = buildClientSchema(schemaResponse);
@@ -104,7 +105,7 @@ export default function Editor({ errorAuth }: EditorPageProps) {
     const headers = areas.headers.ref.current.view?.state.doc.toString();
     const viewer = areas.viewer.ref.current.view;
     if (query) {
-      const { data, errors } = await makeRequest(URL, { query, variables, headers });
+      const { data, errors } = await makeRequest(URL, { query, variables, headers }, name);
       if (errors) {
         errors.forEach((error: Error) => {
           showErrorToast(toast, error.message);
@@ -115,6 +116,14 @@ export default function Editor({ errorAuth }: EditorPageProps) {
         if (viewer) setViewText(viewer, code);
       }
     }
+  };
+
+  const onClickFormat: MouseEventHandler<HTMLButtonElement> = () => {
+    const event = new KeyboardEvent('keydown', { ctrlKey: true, code: 'KeyS', bubbles: true });
+    Object.values(areas).forEach((area) => {
+      const dom = area.ref.current.editor;
+      if (dom) dom.dispatchEvent(event);
+    });
   };
 
   return (
@@ -135,6 +144,7 @@ export default function Editor({ errorAuth }: EditorPageProps) {
           </ButtonDoc>
         )}
       </Flex>
+      <ButtonFormat isError={false} onClick={onClickFormat} />
       <ButtonPlay isError={false} onClick={onClickPlay} />
       <SectionCode areas={areas} />
     </Container>

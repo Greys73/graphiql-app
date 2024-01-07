@@ -9,6 +9,7 @@ export const jsonFormat = (code: string) => {
     return { text: null, error: `error formatting JSON: ${(error as Error).message}` };
   }
 };
+
 export const setViewText = (view: EditorView, text: string) => {
   view.dispatch({
     changes: { from: 0, to: view.state.doc.length, insert: text },
@@ -43,7 +44,13 @@ export const localizedMessage = (text: string, lang = 'en') => {
       return lang === 'en' ? 'Password Confirm is required' : 'Подтверждение пароля обязательное поле';
     case 'matchPass':
       return lang === 'en' ? 'Passwords must match' : 'Пароли должны совпадать';
+    case 'apiError':
+      return lang === 'en' ? 'API Error' : 'Ошибка API';
+    case 'requestError':
+      return lang === 'en' ? 'Request Error' : 'Ошибка запроса';
     default:
       return 'error_message';
   }
 };
+
+export const minimizeMessage = (text: string) => (text.length > 30 ? `${text.substring(0, 25)}...` : text);
