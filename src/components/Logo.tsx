@@ -34,13 +34,7 @@ const Logo = () => {
         gap: gapLogo,
       }}
     >
-      <MotionImage
-        as={NextImage}
-        src={LogoImg}
-        boxSize={'40px'}
-        style={{ height: imageSize }}
-        alt='GraphQL'
-      />
+      <MotionImage as={NextImage} src={LogoImg} width={50} height={40} alt='GraphQL Logo' />
       <MotionHeading
         as='h1'
         size='md'
