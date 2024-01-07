@@ -28,7 +28,7 @@ const Header = ({ isAuth, errorAuth }: HeaderProps) => {
       position={'sticky'}
       top={'0'}
       backgroundColor={'white'}
-      zIndex={'1'}
+      zIndex={90}
       animate={controls}
       variants={{
         full: { filter: 'drop-shadow(#fff 1px 2px 2px)' },
